@@ -6,12 +6,12 @@ export default class Bartender {
 
   }
 
-  mix(jugs: Jugs) {
+  mix(jugs: Jugs): MixResult {
+    if (jugs.anyJugHasTheSameCapacityThan(this.targetVolume)) {
+      return MixResult.Solved;
+    }
     const smallerJug = jugs.smallerJug;
     const biggerJug = jugs.biggerJug;
-    if (jugs.anyJugHasTheSameCapacityThan(this.targetVolume)) {
-      return true;
-    }
     if (jugs.jugWithCloserCapacityTo(this.targetVolume) == smallerJug) {
       let transferredVolume = new Gallons(0);
       while (transferredVolume.isLessThan(this.targetVolume)) {
@@ -26,6 +26,16 @@ export default class Bartender {
           biggerJug.transferContentTo(smallerJug);
       }
     }
-    return jugs.anyJugIsFilledWithVolume(this.targetVolume);
+    const solved = jugs.anyJugIsFilledWithVolume(this.targetVolume);
+    if (solved) {
+      return MixResult.Solved;
+    } else {
+      return MixResult.NoSolution;
+    }
   }
+}
+
+export enum MixResult {
+  Solved,
+  NoSolution
 }

@@ -1,5 +1,5 @@
 import Gallons from '../src/model/gallons.js';
-import Bartender from '../src/model/bartender.js';
+import Bartender, { MixResult } from '../src/model/bartender.js';
 import Jugs from '../src/model/jugs.js';
 
 describe('Any of the Jugs has the same Capacity than the target Volume', () => {
@@ -12,7 +12,7 @@ describe('Any of the Jugs has the same Capacity than the target Volume', () => {
     const expectedGallons = new Gallons(expectedAmount);
     const bartender = new Bartender(expectedGallons);
     const jugs = Jugs.withCapacities(new Gallons(jugXCapacity), new Gallons(jugYCapacity));
-    expect(bartender.mix(jugs)).toBeTruthy();
+    expect(bartender.mix(jugs)).toEqual(MixResult.Solved);
   });
 });
 
@@ -35,7 +35,7 @@ describe('One of the Jugs has less Capacity than the target Volume, the other Ju
     const expectedGallons = new Gallons(expectedAmount);
     const bartender = new Bartender(expectedGallons);
     const jugs = Jugs.withCapacities(new Gallons(jugXCapacity), new Gallons(jugYCapacity));
-    expect(bartender.mix(jugs)).toBeTruthy();
+    expect(bartender.mix(jugs)).toEqual(MixResult.Solved);
   });
 });
 
@@ -50,6 +50,6 @@ describe('No solution', () => {
     const expectedGallons = new Gallons(expectedAmount);
     const bartender = new Bartender(expectedGallons);
     const jugs = Jugs.withCapacities(new Gallons(jugXCapacity), new Gallons(jugYCapacity));
-    expect(bartender.mix(jugs)).toBeFalsy();
+    expect(bartender.mix(jugs)).toEqual(MixResult.NoSolution);
   });
 });
