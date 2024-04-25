@@ -12,9 +12,7 @@ describe('Jug X has the same Capacity than the expected Amount', () => {
     const jugX = Jug.withCapacity(new Gallons(jugXCapacity));
     const jugY = Jug.withCapacity(new Gallons(jugYCapacity));
     const bartender = new Bartender(expectedGallons, jugX, jugY);
-
-    bartender.fill(jugX);
-
+    bartender.mix();
     expect(bartender.solved()).toBeTruthy();
   });
 
@@ -30,9 +28,7 @@ describe('Jug Y has the same Capacity than the expected Amount', () => {
     const jugX = Jug.withCapacity(new Gallons(jugXCapacity));
     const jugY = Jug.withCapacity(new Gallons(jugYCapacity));
     const bartender = new Bartender(expectedGallons, jugX, jugY);
-
-    bartender.fill(jugY);
-
+    bartender.mix();
     expect(bartender.solved()).toBeTruthy();
   });
 });
@@ -50,17 +46,7 @@ describe('Jug X has less Capacity than the expected Amount, Jug Y has sufficient
     const jugX = Jug.withCapacity(new Gallons(jugXCapacity));
     const jugY = Jug.withCapacity(new Gallons(jugYCapacity));
     const bartender = new Bartender(expectedGallons, jugX, jugY);
-
-    for (let i: number = 0; i < (expectedAmount - jugXCapacity); i = i + jugXCapacity) {
-      bartender.fill(jugX);
-      expect(bartender.solved()).toBeFalsy();
-      bartender.transfer(jugX, jugY);
-      expect(bartender.solved()).toBeFalsy();
-    }
-
-    bartender.fill(jugX);
-    expect(bartender.solved()).toBeFalsy();
-    bartender.transfer(jugX, jugY);
+    bartender.mix();
     expect(bartender.solved()).toBeTruthy();
     expect(jugY.amountFilled).toEqual(expectedGallons);
   });
@@ -79,17 +65,7 @@ describe('Jug Y has less Capacity than the expected Amount, Jug X has sufficient
     const jugX = Jug.withCapacity(new Gallons(jugXCapacity));
     const jugY = Jug.withCapacity(new Gallons(jugYCapacity));
     const bartender = new Bartender(expectedGallons, jugX, jugY);
-
-    for (let i: number = 0; i < (expectedAmount - jugYCapacity); i = i + jugYCapacity) {
-      bartender.fill(jugY);
-      expect(bartender.solved()).toBeFalsy();
-      bartender.transfer(jugY, jugX);
-      expect(bartender.solved()).toBeFalsy();
-    }
-
-    bartender.fill(jugY);
-    expect(bartender.solved()).toBeFalsy();
-    bartender.transfer(jugY, jugX);
+    bartender.mix();
     expect(bartender.solved()).toBeTruthy();
     expect(jugX.amountFilled).toEqual(expectedGallons);
   });
@@ -107,15 +83,7 @@ describe('Jug X has less capacity than the expected Amount, Jug Y has more capac
     const jugX = Jug.withCapacity(new Gallons(jugXCapacity));
     const jugY = Jug.withCapacity(new Gallons(jugYCapacity));
     const bartender = new Bartender(expectedGallons, jugX, jugY);
-
-    bartender.fill(jugY);
-    expect(bartender.solved()).toBeFalsy();
-
-    for (let i: number = jugYCapacity; i > expectedAmount; i = i - jugXCapacity) {
-      bartender.transfer(jugY, jugX);
-      bartender.empty(jugX);
-    }
-
+    bartender.mix();
     expect(bartender.solved()).toBeTruthy();
     expect(jugY.amountFilled).toEqual(expectedGallons);
   })

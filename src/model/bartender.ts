@@ -2,12 +2,44 @@ import Jug from './jug.js';
 import Gallons from './gallons.js';
 
 export default class Bartender {
-  constructor(public amountExpected: Gallons, public jugX: Jug, public jugY: Jug) {
+  constructor(public expectedAmount: Gallons, public jugX: Jug, public jugY: Jug) {
 
   }
 
+  mix() {
+    const lowerCapacityJug = this.jugX.hasLessOrEqualCapacityThanJug(this.jugY) ? this.jugX : this.jugY;
+    const higherCapacityJug = this.otherJugThan(lowerCapacityJug);
+    if (lowerCapacityJug.capacity.isEqualTo(this.expectedAmount)) {
+      lowerCapacityJug.fill();
+      return;
+    }
+    if (higherCapacityJug.capacity.isEqualTo(this.expectedAmount)) {
+      higherCapacityJug.fill();
+      return;
+    }
+    if (lowerCapacityJug.hasLessOrEqualCapacityThanAmount(this.expectedAmount) &&
+      higherCapacityJug.hasMoreOrEqualCapacityThanAmount(this.expectedAmount)) {
+      const transferFromLowerToHigherCapacityJug = Math.abs(lowerCapacityJug.capacity.amount - this.expectedAmount.amount) < Math.abs(higherCapacityJug.capacity.amount - this.expectedAmount.amount);
+      if (transferFromLowerToHigherCapacityJug) {
+        for (let i: number = 0; i < (this.expectedAmount.amount - lowerCapacityJug.capacity.amount); i = i + lowerCapacityJug.capacity.amount) {
+          this.fill(lowerCapacityJug);
+          this.transfer(lowerCapacityJug, higherCapacityJug);
+        }
+        this.fill(lowerCapacityJug);
+        this.transfer(lowerCapacityJug, higherCapacityJug);
+        return;
+      } else {
+        this.fill(higherCapacityJug);
+        for (let i: number = higherCapacityJug.capacity.amount; i > this.expectedAmount.amount; i = i - lowerCapacityJug.capacity.amount) {
+          this.transfer(higherCapacityJug, lowerCapacityJug);
+          this.empty(lowerCapacityJug);
+        }
+      }
+    }
+  }
+
   solved() {
-    return this.jugX.amountFilled.isEqualTo(this.amountExpected) || this.jugY.amountFilled.isEqualTo(this.amountExpected);
+    return this.jugX.amountFilled.isEqualTo(this.expectedAmount) || this.jugY.amountFilled.isEqualTo(this.expectedAmount);
   }
 
   fill(jug: Jug) {
@@ -27,6 +59,10 @@ export default class Bartender {
 
   empty(aJug: Jug) {
     aJug.empty();
+  }
+
+  private otherJugThan(checked: Jug) {
+    return checked == this.jugX ? this.jugY : this.jugX
   }
 }
 

@@ -7,12 +7,16 @@ export default class Gallons {
     return this.amount == amountExpected.amount;
   }
 
-  plus(amountToAdd: Gallons) {
-    return new Gallons(this.amount + amountToAdd.amount);
-  }
-
   isLessOrEqualThan(other: Gallons) {
     return this.amount <= other.amount;
+  }
+
+  isGreaterOrEqualThan(other: Gallons) {
+    return this.amount >= other.amount;
+  }
+
+  plus(amountToAdd: Gallons) {
+    return new Gallons(this.amount + amountToAdd.amount);
   }
 
   minus(other: Gallons) {
