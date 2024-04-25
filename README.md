@@ -20,4 +20,4 @@ npm install
 
 
 ## See Also
-This project was create from this template: https://github.com/jsynowiec/node-typescript-boilerplate
+This project was created from this template: https://github.com/jsynowiec/node-typescript-boilerplate
