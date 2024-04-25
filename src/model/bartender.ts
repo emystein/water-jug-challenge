@@ -9,6 +9,9 @@ export default class Bartender {
   mix(jugs: Jugs) {
     const smallerJug = jugs.smallerJug;
     const biggerJug = jugs.biggerJug;
+    if (jugs.anyJugHasTheSameCapacityThan(this.targetVolume)) {
+      return true;
+    }
     if (jugs.jugWithCloserCapacityTo(this.targetVolume) == smallerJug) {
       let transferredVolume = new Gallons(0);
       while (transferredVolume.isLessThan(this.targetVolume)) {
@@ -18,9 +21,9 @@ export default class Bartender {
       }
     } else {
       biggerJug.fill();
-      for (let i: number = biggerJug.capacity.amount; i > this.targetVolume.amount; i = i - smallerJug.capacity.amount) {
-        biggerJug.transferContentTo(smallerJug);
-        smallerJug.empty();
+      while (biggerJug.amountFilled.isGreaterThan(this.targetVolume)) {
+          smallerJug.empty();
+          biggerJug.transferContentTo(smallerJug);
       }
     }
     return jugs.anyJugIsFilledWithVolume(this.targetVolume);

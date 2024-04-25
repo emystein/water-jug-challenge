@@ -35,6 +35,10 @@ export default class Jugs {
     return this.biggerJug.capacityUpTo(targetVolume);
   }
 
+  anyJugHasTheSameCapacityThan(targetVolume: Gallons) {
+    return this.jugX.capacity.isEqualTo(targetVolume) || this.jugY.capacity.isEqualTo(targetVolume);
+  }
+
   anyJugIsFilledWithVolume(targetVolume: Gallons) {
     return this.jugX.amountFilled.isEqualTo(targetVolume) || this.jugY.amountFilled.isEqualTo(targetVolume);
   }

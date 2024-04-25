@@ -27,10 +27,12 @@ export default class Jug {
     if (this.filledContentFitsCompletelyIn(otherJug)) {
       otherJug.add(this.capacity);
       this.empty();
+      return this.capacity;
     } else {
       const amountToTransfer = otherJug.remainingToFill();
       otherJug.add(amountToTransfer);
       this.remove(amountToTransfer);
+      return amountToTransfer;
     }
   }
 
@@ -52,5 +54,9 @@ export default class Jug {
 
   capacityUpTo(otherAmount: Gallons) {
     return this.capacity.differenceWith(otherAmount);
+  }
+
+  isNotEmpty() {
+    return this.amountFilled.isGreaterThan(new Gallons(0));
   }
 }
