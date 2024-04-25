@@ -1,5 +1,4 @@
 import Gallons from '../src/model/gallons.js';
-import Jug from '../src/model/jug.js';
 import Bartender from '../src/model/bartender.js';
 import Jugs from '../src/model/jugs.js';
 
@@ -12,9 +11,7 @@ describe('Any of the Jugs has the same Capacity than the target Volume', () => {
   ('Expected: %p gal. Jug X capacity: %p gal. Jug Y capacity: %p gal. Fill Jug X', (expectedAmount: number, jugXCapacity: number, jugYCapacity: number) => {
     const expectedGallons = new Gallons(expectedAmount);
     const bartender = new Bartender(expectedGallons);
-    const jugX = Jug.withCapacity(new Gallons(jugXCapacity));
-    const jugY = Jug.withCapacity(new Gallons(jugYCapacity));
-    const jugs = new Jugs(jugX, jugY);
+    const jugs = Jugs.withCapacities(new Gallons(jugXCapacity), new Gallons(jugYCapacity));
     expect(bartender.mix(jugs)).toBeTruthy();
   });
 });
@@ -37,9 +34,7 @@ describe('One of the Jugs has less Capacity than the target Volume, the other Ju
   ('Expected: %p gal. Jug X capacity: %p gal. Jug Y capacity: %p gal', (expectedAmount: number, jugXCapacity: number, jugYCapacity: number) => {
     const expectedGallons = new Gallons(expectedAmount);
     const bartender = new Bartender(expectedGallons);
-    const jugX = Jug.withCapacity(new Gallons(jugXCapacity));
-    const jugY = Jug.withCapacity(new Gallons(jugYCapacity));
-    const jugs = new Jugs(jugX, jugY);
+    const jugs = Jugs.withCapacities(new Gallons(jugXCapacity), new Gallons(jugYCapacity));
     expect(bartender.mix(jugs)).toBeTruthy();
   });
 });
@@ -54,9 +49,7 @@ describe('No solution', () => {
   ('Expected: %p gal. Jug X capacity: %p gal. Jug Y capacity: %p gal', (expectedAmount: number, jugXCapacity: number, jugYCapacity: number) => {
     const expectedGallons = new Gallons(expectedAmount);
     const bartender = new Bartender(expectedGallons);
-    const jugX = Jug.withCapacity(new Gallons(jugXCapacity));
-    const jugY = Jug.withCapacity(new Gallons(jugYCapacity));
-    const jugs = new Jugs(jugX, jugY);
+    const jugs = Jugs.withCapacities(new Gallons(jugXCapacity), new Gallons(jugYCapacity));
     expect(bartender.mix(jugs)).toBeFalsy();
   });
 });

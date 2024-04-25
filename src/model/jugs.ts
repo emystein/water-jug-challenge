@@ -6,6 +6,10 @@ export default class Jugs {
 
   }
 
+  static withCapacities(capacityX: Gallons, capacityY: Gallons) {
+    return new Jugs(new Jug(capacityX), new Jug(capacityY));
+  }
+
   get smallerJug() {
     return this.jugX.hasLessOrEqualCapacityThanJug(this.jugY) ? this.jugX : this.jugY;
   }
