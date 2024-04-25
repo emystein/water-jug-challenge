@@ -7,10 +7,6 @@ export default class Jug {
     this.amountFilled = new Gallons(0);
   }
 
-  static withCapacity(capacity: Gallons) {
-    return new Jug(capacity);
-  }
-
   fill() {
     this.amountFilled = this.capacity;
   }
@@ -25,6 +21,17 @@ export default class Jug {
 
   empty() {
     this.amountFilled = new Gallons(0);
+  }
+
+  transferContentTo(otherJug: Jug) {
+    if (this.filledContentFitsCompletelyIn(otherJug)) {
+      otherJug.add(this.capacity);
+      this.empty();
+    } else {
+      const amountToTransfer = otherJug.remainingToFill();
+      otherJug.add(amountToTransfer);
+      this.remove(amountToTransfer);
+    }
   }
 
   filledContentFitsCompletelyIn(other: Jug) {
