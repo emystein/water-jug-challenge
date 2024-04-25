@@ -2,48 +2,40 @@ import Jug from './jug.js';
 import Gallons from './gallons.js';
 
 export default class Bartender {
-  constructor(public expectedAmount: Gallons, public jugX: Jug, public jugY: Jug) {
+  constructor(public targetVolume: Gallons, public jugX: Jug, public jugY: Jug) {
 
+  }
+
+  get smallerJug() {
+    return this.jugX.hasLessOrEqualCapacityThanJug(this.jugY) ? this.jugX : this.jugY;
+  }
+
+  get biggerJug() {
+    return this.jugX.hasGreaterCapacityThanJug(this.jugY) ? this.jugX : this.jugY;
   }
 
   mix() {
-    const lowerCapacityJug = this.jugX.hasLessOrEqualCapacityThanJug(this.jugY) ? this.jugX : this.jugY;
-    const higherCapacityJug = this.otherJugThan(lowerCapacityJug);
-    if (lowerCapacityJug.capacity.isEqualTo(this.expectedAmount)) {
-      lowerCapacityJug.fill();
-      return;
-    }
-    if (higherCapacityJug.capacity.isEqualTo(this.expectedAmount)) {
-      higherCapacityJug.fill();
-      return;
-    }
-    if (lowerCapacityJug.hasLessOrEqualCapacityThanAmount(this.expectedAmount) &&
-      higherCapacityJug.hasMoreOrEqualCapacityThanAmount(this.expectedAmount)) {
-      const transferFromLowerToHigherCapacityJug = Math.abs(lowerCapacityJug.capacity.amount - this.expectedAmount.amount) < Math.abs(higherCapacityJug.capacity.amount - this.expectedAmount.amount);
-      if (transferFromLowerToHigherCapacityJug) {
-        for (let i: number = 0; i < (this.expectedAmount.amount - lowerCapacityJug.capacity.amount); i = i + lowerCapacityJug.capacity.amount) {
-          this.fill(lowerCapacityJug);
-          this.transfer(lowerCapacityJug, higherCapacityJug);
-        }
-        this.fill(lowerCapacityJug);
-        this.transfer(lowerCapacityJug, higherCapacityJug);
-        return;
-      } else {
-        this.fill(higherCapacityJug);
-        for (let i: number = higherCapacityJug.capacity.amount; i > this.expectedAmount.amount; i = i - lowerCapacityJug.capacity.amount) {
-          this.transfer(higherCapacityJug, lowerCapacityJug);
-          this.empty(lowerCapacityJug);
-        }
+    const smallerJug = this.smallerJug;
+    const biggerJug = this.biggerJug;
+    if (this.jugWithCloserCapacityToExpectedAmount() == smallerJug) {
+      for (let i: number = 0; i < (this.targetVolume.amount - smallerJug.capacity.amount); i = i + smallerJug.capacity.amount) {
+        this.fill(smallerJug);
+        this.transfer(smallerJug, biggerJug);
+      }
+      this.fill(smallerJug);
+      this.transfer(smallerJug, biggerJug);
+    } else {
+      this.fill(biggerJug);
+      for (let i: number = biggerJug.capacity.amount; i > this.targetVolume.amount; i = i - smallerJug.capacity.amount) {
+        this.transfer(biggerJug, smallerJug);
+        this.empty(smallerJug);
       }
     }
-  }
-
-  solved() {
-    return this.jugX.amountFilled.isEqualTo(this.expectedAmount) || this.jugY.amountFilled.isEqualTo(this.expectedAmount);
+    return this.solved();
   }
 
   fill(jug: Jug) {
-    jug.fill()
+    jug.fill();
   }
 
   transfer(jugA: Jug, jugB: Jug) {
@@ -51,7 +43,7 @@ export default class Bartender {
       jugB.add(jugA.capacity);
       jugA.empty();
     } else {
-      const amountToTransfer = jugB.remainingToFill()
+      const amountToTransfer = jugB.remainingToFill();
       jugB.add(amountToTransfer);
       jugA.remove(amountToTransfer);
     }
@@ -61,8 +53,24 @@ export default class Bartender {
     aJug.empty();
   }
 
-  private otherJugThan(checked: Jug) {
-    return checked == this.jugX ? this.jugY : this.jugX
+  solved() {
+    return this.jugX.amountFilled.isEqualTo(this.targetVolume) || this.jugY.amountFilled.isEqualTo(this.targetVolume);
+  }
+
+  private jugWithCloserCapacityToExpectedAmount() {
+    if (this.smallerJugCapacityUpToTargetVolume()
+      .isLessThan(this.biggerJugCapacityUpToTargetVolume())) {
+      return this.smallerJug;
+    } else {
+      return this.biggerJug;
+    }
+  }
+
+  private smallerJugCapacityUpToTargetVolume() {
+    return this.smallerJug.capacityUpTo(this.targetVolume);
+  }
+
+  private biggerJugCapacityUpToTargetVolume() {
+    return this.biggerJug.capacityUpTo(this.targetVolume);
   }
 }
-

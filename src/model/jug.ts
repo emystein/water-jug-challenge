@@ -39,11 +39,11 @@ export default class Jug {
     return this.capacity.isLessOrEqualThan(other.capacity);
   }
 
-  hasLessOrEqualCapacityThanAmount(amountToCheck: Gallons) {
-    return this.capacity.isLessOrEqualThan(amountToCheck);
+  hasGreaterCapacityThanJug(other: Jug) {
+    return this.capacity.isGreaterThan(other.capacity);
   }
 
-  hasMoreOrEqualCapacityThanAmount(amountToCheck: Gallons) {
-    return this.capacity.isGreaterOrEqualThan(amountToCheck);
+  capacityUpTo(otherAmount: Gallons) {
+    return this.capacity.differenceWith(otherAmount)
   }
 }
