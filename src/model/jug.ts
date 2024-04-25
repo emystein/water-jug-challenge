@@ -1,10 +1,8 @@
 import Gallons from './gallons.js';
 
 export default class Jug {
-  public amountFilled: Gallons;
+  constructor(public name: string, public capacity: Gallons, public amountFilled = new Gallons(0)) {
 
-  constructor(public capacity: Gallons) {
-    this.amountFilled = new Gallons(0);
   }
 
   fill() {
@@ -52,11 +50,19 @@ export default class Jug {
     return this.capacity.isGreaterThan(other.capacity);
   }
 
-  capacityUpTo(otherAmount: Gallons) {
-    return this.capacity.differenceWith(otherAmount);
+  hasCapacity(targetVolume: Gallons) {
+    return this.capacity.isEqualTo(targetVolume);
+  }
+
+  capacityUpTo(otherVolume: Gallons) {
+    return this.capacity.differenceWith(otherVolume);
   }
 
   isNotEmpty() {
     return this.amountFilled.isGreaterThan(new Gallons(0));
+  }
+
+  cloneFilledWith(volumeFilled: Gallons) {
+    return new Jug(this.name, this.capacity, volumeFilled);
   }
 }

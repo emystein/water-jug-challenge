@@ -7,7 +7,11 @@ export default class Jugs {
   }
 
   static withCapacities(capacityX: Gallons, capacityY: Gallons) {
-    return new Jugs(new Jug(capacityX), new Jug(capacityY));
+    return new Jugs(new Jug("X", capacityX), new Jug("Y", capacityY));
+  }
+
+  get all() {
+    return [this.jugX, this.jugY];
   }
 
   get smallerJug() {
@@ -41,5 +45,13 @@ export default class Jugs {
 
   anyJugIsFilledWithVolume(targetVolume: Gallons) {
     return this.jugX.amountFilled.isEqualTo(targetVolume) || this.jugY.amountFilled.isEqualTo(targetVolume);
+  }
+
+  otherJugThan(jug: Jug) {
+    return jug == this.jugX ? this.jugY : this.jugX;
+  }
+
+  jugsWithTheSameCapacityThan(targetVolume: Gallons) {
+    return this.all.filter(jug => jug.hasCapacity(targetVolume));
   }
 }
