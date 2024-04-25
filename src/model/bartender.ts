@@ -10,12 +10,12 @@ export default class Bartender {
     const smallerJug = jugs.smallerJug;
     const biggerJug = jugs.biggerJug;
     if (jugs.jugWithCloserCapacityTo(this.targetVolume) == smallerJug) {
-      for (let i: number = 0; i < (this.targetVolume.amount - smallerJug.capacity.amount); i = i + smallerJug.capacity.amount) {
+      let transferredVolume = new Gallons(0);
+      while (transferredVolume.isLessThan(this.targetVolume)) {
         smallerJug.fill();
         smallerJug.transferContentTo(biggerJug);
+        transferredVolume = transferredVolume.plus(smallerJug.capacity);
       }
-      smallerJug.fill();
-      smallerJug.transferContentTo(biggerJug);
     } else {
       biggerJug.fill();
       for (let i: number = biggerJug.capacity.amount; i > this.targetVolume.amount; i = i - smallerJug.capacity.amount) {

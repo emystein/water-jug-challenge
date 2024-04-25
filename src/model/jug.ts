@@ -51,6 +51,6 @@ export default class Jug {
   }
 
   capacityUpTo(otherAmount: Gallons) {
-    return this.capacity.differenceWith(otherAmount)
+    return this.capacity.differenceWith(otherAmount);
   }
 }
