@@ -1,23 +1,16 @@
 import Jug from './jug.js';
 import Gallons from './gallons.js';
+import Jugs from './jugs.js';
 
 export default class Bartender {
-  constructor(public targetVolume: Gallons, public jugX: Jug, public jugY: Jug) {
+  constructor(public targetVolume: Gallons) {
 
   }
 
-  get smallerJug() {
-    return this.jugX.hasLessOrEqualCapacityThanJug(this.jugY) ? this.jugX : this.jugY;
-  }
-
-  get biggerJug() {
-    return this.jugX.hasGreaterCapacityThanJug(this.jugY) ? this.jugX : this.jugY;
-  }
-
-  mix() {
-    const smallerJug = this.smallerJug;
-    const biggerJug = this.biggerJug;
-    if (this.jugWithCloserCapacityToExpectedAmount() == smallerJug) {
+  mix(jugs: Jugs) {
+    const smallerJug = jugs.smallerJug;
+    const biggerJug = jugs.biggerJug;
+    if (jugs.jugWithCloserCapacityTo(this.targetVolume) == smallerJug) {
       for (let i: number = 0; i < (this.targetVolume.amount - smallerJug.capacity.amount); i = i + smallerJug.capacity.amount) {
         this.fill(smallerJug);
         this.transfer(smallerJug, biggerJug);
@@ -31,7 +24,7 @@ export default class Bartender {
         this.empty(smallerJug);
       }
     }
-    return this.solved();
+    return jugs.anyJugIsFilledWithVolume(this.targetVolume);
   }
 
   fill(jug: Jug) {
@@ -51,26 +44,5 @@ export default class Bartender {
 
   empty(aJug: Jug) {
     aJug.empty();
-  }
-
-  solved() {
-    return this.jugX.amountFilled.isEqualTo(this.targetVolume) || this.jugY.amountFilled.isEqualTo(this.targetVolume);
-  }
-
-  private jugWithCloserCapacityToExpectedAmount() {
-    if (this.smallerJugCapacityUpToTargetVolume()
-      .isLessThan(this.biggerJugCapacityUpToTargetVolume())) {
-      return this.smallerJug;
-    } else {
-      return this.biggerJug;
-    }
-  }
-
-  private smallerJugCapacityUpToTargetVolume() {
-    return this.smallerJug.capacityUpTo(this.targetVolume);
-  }
-
-  private biggerJugCapacityUpToTargetVolume() {
-    return this.biggerJug.capacityUpTo(this.targetVolume);
   }
 }

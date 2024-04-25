@@ -1,6 +1,7 @@
 import Gallons from '../src/model/gallons.js';
 import Jug from '../src/model/jug.js';
 import Bartender from '../src/model/bartender.js';
+import Jugs from '../src/model/jugs.js';
 
 describe('Any of the Jugs has the same Capacity than the target Volume', () => {
   it.each([
@@ -10,10 +11,11 @@ describe('Any of the Jugs has the same Capacity than the target Volume', () => {
   ])
   ('Expected: %p gal. Jug X capacity: %p gal. Jug Y capacity: %p gal. Fill Jug X', (expectedAmount: number, jugXCapacity: number, jugYCapacity: number) => {
     const expectedGallons = new Gallons(expectedAmount);
+    const bartender = new Bartender(expectedGallons);
     const jugX = Jug.withCapacity(new Gallons(jugXCapacity));
     const jugY = Jug.withCapacity(new Gallons(jugYCapacity));
-    const bartender = new Bartender(expectedGallons, jugX, jugY);
-    expect(bartender.mix()).toBeTruthy();
+    const jugs = new Jugs(jugX, jugY);
+    expect(bartender.mix(jugs)).toBeTruthy();
   });
 });
 
@@ -21,14 +23,12 @@ describe('One of the Jugs has less Capacity than the target Volume, the other Ju
   it.each([
     [2, 1, 2],
     [2, 1, 4],
-    [4, 1, 4],
     [6, 2, 6],
     [6, 2, 8],
     [8, 2, 10],
     [96, 2, 100],
     [2, 2, 1],
     [2, 4, 1],
-    [4, 4, 1],
     [6, 6, 2],
     [6, 8, 2],
     [8, 10, 2],
@@ -36,10 +36,11 @@ describe('One of the Jugs has less Capacity than the target Volume, the other Ju
   ])
   ('Expected: %p gal. Jug X capacity: %p gal. Jug Y capacity: %p gal', (expectedAmount: number, jugXCapacity: number, jugYCapacity: number) => {
     const expectedGallons = new Gallons(expectedAmount);
+    const bartender = new Bartender(expectedGallons);
     const jugX = Jug.withCapacity(new Gallons(jugXCapacity));
     const jugY = Jug.withCapacity(new Gallons(jugYCapacity));
-    const bartender = new Bartender(expectedGallons, jugX, jugY);
-    expect(bartender.mix()).toBeTruthy();
+    const jugs = new Jugs(jugX, jugY);
+    expect(bartender.mix(jugs)).toBeTruthy();
   });
 });
 
@@ -52,9 +53,10 @@ describe('No solution', () => {
   ])
   ('Expected: %p gal. Jug X capacity: %p gal. Jug Y capacity: %p gal', (expectedAmount: number, jugXCapacity: number, jugYCapacity: number) => {
     const expectedGallons = new Gallons(expectedAmount);
+    const bartender = new Bartender(expectedGallons);
     const jugX = Jug.withCapacity(new Gallons(jugXCapacity));
     const jugY = Jug.withCapacity(new Gallons(jugYCapacity));
-    const bartender = new Bartender(expectedGallons, jugX, jugY);
-    expect(bartender.mix()).toBeFalsy();
+    const jugs = new Jugs(jugX, jugY);
+    expect(bartender.mix(jugs)).toBeFalsy();
   });
 });
