@@ -15,11 +15,11 @@ export default class Jugs {
   }
 
   get smallerJug() {
-    return this.jugX.hasLessOrEqualCapacityThanJug(this.jugY) ? this.jugX : this.jugY;
+    return this.jugX.hasLessOrEqualCapacityThan(this.jugY) ? this.jugX : this.jugY;
   }
 
   get biggerJug() {
-    return this.jugX.hasGreaterCapacityThanJug(this.jugY) ? this.jugX : this.jugY;
+    return this.jugX.hasGreaterCapacityThan(this.jugY) ? this.jugX : this.jugY;
   }
 
   jugWithCloserCapacityTo(targetVolume: Gallons) {

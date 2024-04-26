@@ -42,11 +42,11 @@ export default class Jug {
     return this.capacity.minus(this.volumeFilled);
   }
 
-  hasLessOrEqualCapacityThanJug(other: Jug) {
+  hasLessOrEqualCapacityThan(other: Jug) {
     return this.capacity.isLessOrEqualThan(other.capacity);
   }
 
-  hasGreaterCapacityThanJug(other: Jug) {
+  hasGreaterCapacityThan(other: Jug) {
     return this.capacity.isGreaterThan(other.capacity);
   }
 
@@ -56,10 +56,6 @@ export default class Jug {
 
   capacityUpTo(otherVolume: Gallons) {
     return this.capacity.differenceWith(otherVolume);
-  }
-
-  isNotEmpty() {
-    return this.volumeFilled.isGreaterThan(new Gallons(0));
   }
 
   clone() {
