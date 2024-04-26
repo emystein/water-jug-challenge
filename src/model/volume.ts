@@ -34,12 +34,21 @@ export default class Gallons {
   }
 
   differenceWith(other: Gallons) {
-    return new Gallons(Math.abs(this.minus(other).amount));
+    return new Gallons(Math.abs(this.amount - other.amount));
   }
 }
 
 export class IllegalVolume extends Error {
   constructor(illegalValue: number) {
     super(`Illegal Volume: ${illegalValue}`);
+  }
+}
+
+export class PositiveGallons extends Gallons {
+  constructor(amount: number) {
+    super(amount);
+    if (amount == 0) {
+      throw new IllegalVolume(0);
+    }
   }
 }

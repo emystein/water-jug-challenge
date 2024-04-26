@@ -1,4 +1,4 @@
-import Gallons from '../src/model/volume.js';
+import Gallons, { PositiveGallons } from '../src/model/volume.js';
 import Jugs from '../src/model/jugs.js';
 import MixLogger, { MixLogEntry } from '../src/model/mixLogger.js';
 import Mixer, { MixResult } from '../src/model/mixer.js';
@@ -46,7 +46,7 @@ test('Log steps when Jug Y has the same Capacity than the target Volume', () => 
 
 test('Log steps when smaller Jug transfers to bigger Jug', () => {
   const expectedAmount = 4;
-  const expectedGallons = new Gallons(expectedAmount);
+  const expectedGallons = new PositiveGallons(expectedAmount);
   const jugs = Jugs.withCapacities(new Gallons(2), new Gallons(10));
   const logger = new MixLogger(jugs);
   const mixer = new Mixer(expectedGallons, logger);
@@ -62,7 +62,7 @@ test('Log steps when smaller Jug transfers to bigger Jug', () => {
 
 test('Log steps when bigger Jug transfers to smaller Jug', () => {
   const expectedAmount = 96;
-  const expectedGallons = new Gallons(expectedAmount);
+  const expectedGallons = new PositiveGallons(expectedAmount);
   const jugs = Jugs.withCapacities(new Gallons(2), new Gallons(100));
   const logger = new MixLogger(jugs);
   const mixer = new Mixer(expectedGallons, logger);
