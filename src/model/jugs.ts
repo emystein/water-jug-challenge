@@ -39,7 +39,7 @@ export default class Jugs {
     return this.biggerJug.capacityUpTo(targetVolume);
   }
 
-  anyJugHasTheSameCapacityThan(targetVolume: Gallons) {
+  haveAJugWithTheSameCapacityThan(targetVolume: Gallons) {
     return this.jugX.capacity.isEqualTo(targetVolume) || this.jugY.capacity.isEqualTo(targetVolume);
   }
 

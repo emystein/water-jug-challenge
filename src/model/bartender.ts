@@ -48,7 +48,7 @@ export default class Bartender {
   }
 
   mix(jugs: Jugs): MixResult {
-    if (jugs.anyJugHasTheSameCapacityThan(this.targetVolume)) {
+    if (jugs.haveAJugWithTheSameCapacityThan(this.targetVolume)) {
       const fillingJug = jugs.allWithTheSameCapacityThan(this.targetVolume)[0];
       fillingJug.fill();
       this.logger.addEntry(new FillJug(fillingJug));
