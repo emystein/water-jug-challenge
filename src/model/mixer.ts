@@ -2,6 +2,7 @@ import Gallons from './gallons.js';
 import Jugs from './jugs.js';
 import MixLogger from './mixLogger.js';
 import { EmptyJug, FillJug, TransferContentBetweenJugs } from './mixActions.js';
+import Jug from './jug.js';
 
 export default class Mixer {
   constructor(public targetVolume: Gallons, private logger: MixLogger) {
@@ -10,8 +11,7 @@ export default class Mixer {
   mix(jugs: Jugs): MixResult {
     if (jugs.haveAJugWithTheSameCapacityThan(this.targetVolume)) {
       const fillingJug = jugs.allWithTheSameCapacityThan(this.targetVolume)[0];
-      fillingJug.fill();
-      this.logger.addEntry(new FillJug(fillingJug));
+      this.fill(fillingJug);
       return MixResult.Solved;
     }
 
@@ -19,27 +19,37 @@ export default class Mixer {
     const biggerJug = jugs.biggerJug;
 
     if (jugs.jugWithNearestCapacityTo(this.targetVolume) == smallerJug) {
-      let transferredVolume = new Gallons(0);
-      while (transferredVolume.isLessThan(this.targetVolume)) {
-        smallerJug.fill();
-        this.logger.addEntry(new FillJug(smallerJug));
-        smallerJug.transferContentTo(biggerJug);
-        transferredVolume = transferredVolume.plus(smallerJug.capacity);
-        this.logger.addEntry(new TransferContentBetweenJugs(smallerJug, biggerJug, transferredVolume));
+      let accumulatedVolume = new Gallons(0);
+      while (accumulatedVolume.isLessThan(this.targetVolume)) {
+        this.fill(smallerJug);
+        accumulatedVolume = accumulatedVolume.plus(smallerJug.capacity);
+        this.transferBetween(smallerJug, biggerJug, accumulatedVolume);
       }
     } else {
-      biggerJug.fill();
-      this.logger.addEntry(new FillJug(biggerJug));
+      this.fill(biggerJug);
       while (biggerJug.volumeFilled.isGreaterThan(this.targetVolume)) {
-        smallerJug.empty();
-        this.logger.addEntry(new EmptyJug(smallerJug));
-        biggerJug.transferContentTo(smallerJug);
-        this.logger.addEntry(new TransferContentBetweenJugs(biggerJug, smallerJug, smallerJug.capacity));
+        this.empty(smallerJug);
+        this.transferBetween(biggerJug, smallerJug, smallerJug.capacity);
       }
     }
 
     const isSolved = jugs.haveAJugFilledWithVolume(this.targetVolume);
     return isSolved ? MixResult.Solved : MixResult.NoSolution;
+  }
+
+  fill(aJug: Jug) {
+    aJug.fill();
+    this.logger.addEntry(new FillJug(aJug));
+  }
+
+  empty(aJug: Jug) {
+    aJug.empty();
+    this.logger.addEntry(new EmptyJug(aJug));
+  }
+
+  transferBetween(sender: Jug, receiver: Jug, accumulatedVolume: Gallons) {
+    sender.transferContentTo(receiver);
+    this.logger.addEntry(new TransferContentBetweenJugs(sender, receiver, accumulatedVolume));
   }
 }
 
