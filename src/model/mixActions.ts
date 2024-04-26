@@ -1,42 +1,36 @@
 import Jug from './jug.js';
 import Gallons from './gallons.js';
 
-export interface MixAction {
-  triggeringJug: Jug;
-  otherJug: Jug | undefined;
-  text: string;
+export abstract class MixAction {
+  protected constructor(
+    public triggeringJug: Jug,
+    public otherJug: Jug | undefined,
+    public text: string) {
+  }
 }
 
-export class FillJug implements MixAction {
-  public triggeringJug: Jug;
-  public otherJug: Jug | undefined;
-  public text: string;
-
+export class FillJug extends MixAction {
   constructor(triggeringJug: Jug) {
-    this.triggeringJug = triggeringJug.cloneFilledWith(triggeringJug.capacity);
-    this.text = `Fill Jug ${triggeringJug.name}`;
+    super(
+      triggeringJug.cloneFilledWith(triggeringJug.capacity),
+      undefined,
+      `Fill Jug ${triggeringJug.name}`,
+    );
   }
 }
 
-export class TransferContentBetweenJugs implements MixAction {
-  public triggeringJug: Jug;
-  public otherJug: Jug | undefined;
-  public text: string;
-
+export class TransferContentBetweenJugs extends MixAction {
   constructor(sender: Jug, receiver: Jug, transferredVolume: Gallons) {
-    this.triggeringJug = sender.cloneFilledWith(sender.volumeFilled);
-    this.otherJug = receiver.cloneFilledWith(transferredVolume);
-    this.text = `Transfer from Jug ${sender.name} to Jug ${receiver.name}`;
+    super(
+      sender.cloneFilledWith(sender.volumeFilled),
+      receiver.cloneFilledWith(transferredVolume),
+      `Transfer from Jug ${sender.name} to Jug ${receiver.name}`,
+    );
   }
 }
 
-export class EmptyJug implements MixAction {
-  public triggeringJug: Jug;
-  public otherJug: Jug | undefined;
-  public text: string;
-
+export class EmptyJug extends MixAction {
   constructor(emptyJug: Jug) {
-    this.triggeringJug = emptyJug.clone();
-    this.text = `Empty Jug ${emptyJug.name}`;
+    super(emptyJug.clone(), undefined, `Empty Jug ${emptyJug.name}`);
   }
 }
