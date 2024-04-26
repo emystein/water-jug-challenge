@@ -1,23 +1,118 @@
+# Water Jugs Challenge
+
+This project intent is to solve a variation of the Water Jugs problem
+
+It provides a simple RESTful API to mix jugs to get to a target volume.
+
 ## Requirements
-This project was built and tested using Node.js 21.7.3, NPM 10.5.2
 
-## Setup
+- Node.js (version 14 or higher)
+- npm (Node.js package manager)
 
-```sh
+## Installation
+
+1. Clone this repository:
+
+```bash
+git clone https://github.com/emystein/water-jug-challenge.git
+cd water-jug-challenge
+```
+
+2. Install dependencies:
+
+```bash
 npm install
 ```
 
-## Available Scripts
+3. Start the server:
 
-- `clean` - remove coverage data, Jest cache and transpiled files,
-- `prebuild` - lint source files and tests before building,
-- `build` - transpile TypeScript to ES6,
-- `build:watch` - interactive watch mode to automatically transpile source files,
-- `lint` - lint source files and tests,
-- `prettier` - reformat files,
-- `test` - run tests,
-- `test:watch` - interactive watch mode to automatically re-run tests
+```bash
+npm run build
+npm start
+```
 
+The server will start running at `http://localhost:3000`.
 
-## See Also
-This project was created from this template: https://github.com/jsynowiec/node-typescript-boilerplate
+## API Endpoints
+
+### POST /mix
+
+This endpoint mixes two jugs with given volumes and a target volume.
+
+#### Request Body
+
+- `jugX`: Volume of jug X (positive number)
+- `jugY`: Volume of jug Y (positive number)
+- `targetVolume`: Target volume to achieve (positive number)
+
+#### Response
+
+- `200 OK`: If mixing is successful, returns the mixing result.
+- `400 Bad Request`: If any of the input parameters (jugX, jugY, targetVolume) are not positive numbers.
+
+### Example
+
+#### Success
+Mixing jugs with volumes jugX=2, jugY=10, targetVolume=4:
+
+```bash
+curl -X POST http://localhost:3000/mix -H "Content-Type: application/json" -d '{"jugX":2,"jugY":10,"targetVolume":4}'
+```
+
+should return a JSON response like this:
+
+```json
+{
+  "status": "Solved",
+  "solution": [
+    {
+      "step": 1,
+      "jugX": 2,
+      "jugY": 0,
+      "action": "Fill Jug X"
+    },
+    {
+      "step": 2,
+      "jugX": 0,
+      "jugY": 2,
+      "action": "Transfer from Jug X to Jug Y"
+    },
+    {
+      "step": 3,
+      "jugX": 2,
+      "jugY": 2,
+      "action": "Fill Jug X"
+    },
+    {
+      "step": 4,
+      "jugX": 0,
+      "jugY": 4,
+      "action": "Transfer from Jug X to Jug Y"
+    }
+  ]
+}
+```
+
+#### No Solution
+Mixing jugs with volumes jugX=2, jugY=6, targetVolume=5:
+
+```bash
+curl -X POST http://localhost:3000/mix -H "Content-Type: application/json" -d '{"jugX":2,"jugY":6,"targetVolume":5}'
+```
+
+should return a JSON response like this:
+
+```json
+{
+  "status": "No Solution",
+  "solution": []
+}
+```
+
+## Running Tests
+
+To run the internal tests:
+
+```bash
+npm test
+```

@@ -1,5 +1,5 @@
 import Gallons from '../src/model/volume.js';
-import MixService, { MixReportRow } from '../src/service/mixer.js';
+import { MixReportRow, MixService } from '../src/services/MixService.js';
 
 function verifyReportRow(reportRow: MixReportRow,
                         expectedStep: number,

@@ -3,7 +3,7 @@ import Jugs from '../model/jugs.js';
 import { PositiveGallons } from '../model/volume.js';
 import Mixer, { MixResult } from '../model/mixer.js';
 
-export default class MixService {
+export class MixService {
   constructor() {
 
   }
