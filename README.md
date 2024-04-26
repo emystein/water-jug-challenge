@@ -1,6 +1,6 @@
 # Water Jugs Challenge
 
-This project intent is to solve a variation of the Water Jugs problem
+This project's intent is to solve a variation of the Water Jugs problem.
 
 It provides a simple RESTful API to mix jugs to get to a target volume.
 
@@ -108,9 +108,9 @@ should return a JSON response like this:
 }
 ```
 
-## Running Tests
+## Tests
 
-To run the internal tests:
+To run the tests:
 
 ```bash
 npm test
