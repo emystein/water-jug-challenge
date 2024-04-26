@@ -1,7 +1,7 @@
 import Gallons from './gallons.js';
 import Jugs from './jugs.js';
 import MixLogger from './mixLogger.js';
-import { EmptyJug, FillJug, TransferContentBetweenJugs } from './emptyJug.js';
+import { EmptyJug, FillJug, TransferContentBetweenJugs } from './mixActions.js';
 
 export default class Mixer {
   constructor(public targetVolume: Gallons, private logger: MixLogger) {
