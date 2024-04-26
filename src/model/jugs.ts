@@ -22,7 +22,7 @@ export default class Jugs {
     return this.jugX.hasGreaterCapacityThan(this.jugY) ? this.jugX : this.jugY;
   }
 
-  jugWithCloserCapacityTo(targetVolume: Gallons) {
+  jugWithNearestCapacityTo(targetVolume: Gallons) {
     if (this.smallerJugCapacityUpToTargetVolume(targetVolume)
       .isLessThan(this.biggerJugCapacityUpToTargetVolume(targetVolume))) {
       return this.smallerJug;
@@ -43,7 +43,7 @@ export default class Jugs {
     return this.jugX.capacity.isEqualTo(targetVolume) || this.jugY.capacity.isEqualTo(targetVolume);
   }
 
-  anyJugIsFilledWithVolume(targetVolume: Gallons) {
+  haveAJugFilledWithVolume(targetVolume: Gallons) {
     return this.jugX.volumeFilled.isEqualTo(targetVolume) || this.jugY.volumeFilled.isEqualTo(targetVolume);
   }
 
