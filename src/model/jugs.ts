@@ -44,11 +44,11 @@ export default class Jugs {
   }
 
   anyJugIsFilledWithVolume(targetVolume: Gallons) {
-    return this.jugX.amountFilled.isEqualTo(targetVolume) || this.jugY.amountFilled.isEqualTo(targetVolume);
+    return this.jugX.volumeFilled.isEqualTo(targetVolume) || this.jugY.volumeFilled.isEqualTo(targetVolume);
   }
 
   otherJugThan(jug: Jug) {
-    return jug == this.jugX ? this.jugY : this.jugX;
+    return jug.name == this.jugX.name ? this.jugY : this.jugX;
   }
 
   jugsWithTheSameCapacityThan(targetVolume: Gallons) {

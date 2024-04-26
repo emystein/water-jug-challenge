@@ -3,15 +3,43 @@ import Jugs from './jugs.js';
 import MixLogger from './mixLogger.js';
 import Jug from './jug.js';
 
-export class MixAction {
-  constructor(public triggeringJug: Jug, public text: string) {
+export interface MixAction {
+  triggeringJug: Jug;
+  otherJug: Jug | undefined;
+  text: string;
+}
 
+export class FillJug implements MixAction {
+  public triggeringJug: Jug;
+  public otherJug: Jug | undefined;
+  public text: string;
+
+  constructor(triggeringJug: Jug) {
+    this.triggeringJug = triggeringJug.cloneFilledWith(triggeringJug.capacity);
+    this.text = `Fill Jug ${triggeringJug.name}`;
   }
 }
 
-export class FillJug extends MixAction {
-  constructor(triggeringJug: Jug) {
-    super(triggeringJug, `Fill Jug ${triggeringJug.name}`);
+class TransferContentBetweenJugs implements MixAction {
+  public triggeringJug: Jug;
+  public otherJug: Jug | undefined;
+  public text: string;
+
+  constructor(sender: Jug, receiver: Jug, transferredVolume: Gallons) {
+    this.triggeringJug = sender.cloneFilledWith(sender.volumeFilled);
+    this.otherJug = receiver.cloneFilledWith(transferredVolume);
+    this.text = `Transfer from Jug ${sender.name} to Jug ${receiver.name}`;
+  }
+}
+
+class EmptyJug implements MixAction {
+  public triggeringJug: Jug;
+  public otherJug: Jug | undefined;
+  public text: string;
+
+  constructor(emptyJug: Jug) {
+    this.triggeringJug = emptyJug.clone();
+    this.text = `Empty Jug ${emptyJug.name}`;
   }
 }
 
@@ -29,21 +57,29 @@ export default class Bartender {
 
     const smallerJug = jugs.smallerJug;
     const biggerJug = jugs.biggerJug;
+
     if (jugs.jugWithCloserCapacityTo(this.targetVolume) == smallerJug) {
       let transferredVolume = new Gallons(0);
       while (transferredVolume.isLessThan(this.targetVolume)) {
         smallerJug.fill();
+        this.logger.addEntry(new FillJug(smallerJug));
         smallerJug.transferContentTo(biggerJug);
         transferredVolume = transferredVolume.plus(smallerJug.capacity);
+        this.logger.addEntry(new TransferContentBetweenJugs(smallerJug, biggerJug, transferredVolume));
       }
     } else {
       biggerJug.fill();
-      while (biggerJug.amountFilled.isGreaterThan(this.targetVolume)) {
-          smallerJug.empty();
-          biggerJug.transferContentTo(smallerJug);
+      this.logger.addEntry(new FillJug(biggerJug));
+      while (biggerJug.volumeFilled.isGreaterThan(this.targetVolume)) {
+        smallerJug.empty();
+        this.logger.addEntry(new EmptyJug(smallerJug));
+        biggerJug.transferContentTo(smallerJug);
+        this.logger.addEntry(new TransferContentBetweenJugs(biggerJug, smallerJug, smallerJug.capacity));
       }
     }
+
     const solved = jugs.anyJugIsFilledWithVolume(this.targetVolume);
+
     if (solved) {
       return MixResult.Solved;
     } else {

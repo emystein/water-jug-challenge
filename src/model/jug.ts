@@ -1,24 +1,24 @@
 import Gallons from './gallons.js';
 
 export default class Jug {
-  constructor(public name: string, public capacity: Gallons, public amountFilled = new Gallons(0)) {
+  constructor(public name: string, public capacity: Gallons, public volumeFilled = new Gallons(0)) {
 
   }
 
   fill() {
-    this.amountFilled = this.capacity;
+    this.volumeFilled = this.capacity;
   }
 
   add(amountToAdd: Gallons) {
-    this.amountFilled = this.amountFilled.plus(amountToAdd);
+    this.volumeFilled = this.volumeFilled.plus(amountToAdd);
   }
 
   remove(amountToRemove: Gallons) {
-    this.amountFilled = this.amountFilled.minus(amountToRemove);
+    this.volumeFilled = this.volumeFilled.minus(amountToRemove);
   }
 
   empty() {
-    this.amountFilled = new Gallons(0);
+    this.volumeFilled = new Gallons(0);
   }
 
   transferContentTo(otherJug: Jug) {
@@ -35,11 +35,11 @@ export default class Jug {
   }
 
   filledContentFitsCompletelyIn(other: Jug) {
-    return this.amountFilled.isLessOrEqualThan(other.remainingToFill());
+    return this.volumeFilled.isLessOrEqualThan(other.remainingToFill());
   }
 
   remainingToFill() {
-    return this.capacity.minus(this.amountFilled);
+    return this.capacity.minus(this.volumeFilled);
   }
 
   hasLessOrEqualCapacityThanJug(other: Jug) {
@@ -59,7 +59,11 @@ export default class Jug {
   }
 
   isNotEmpty() {
-    return this.amountFilled.isGreaterThan(new Gallons(0));
+    return this.volumeFilled.isGreaterThan(new Gallons(0));
+  }
+
+  clone() {
+    return new Jug(this.name, this.capacity, this.volumeFilled);
   }
 
   cloneFilledWith(volumeFilled: Gallons) {
