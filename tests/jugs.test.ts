@@ -1,5 +1,5 @@
-import Jugs from '../src/model/jugs.js';
-import Gallons, { IllegalVolume } from '../src/model/volume.js';
+import Jugs from '../src/model/jugs';
+import Gallons, { IllegalVolume } from '../src/model/volume';
 
 describe('Jugs', () => {
   test('Illegal Jug X capacity', () => {

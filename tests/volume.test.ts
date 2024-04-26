@@ -1,4 +1,4 @@
-import Gallons, { IllegalVolume } from '../src/model/volume.js';
+import Gallons, { IllegalVolume } from '../src/model/volume';
 
 describe("Gallons", () => {
   test("should not be negative", () => {

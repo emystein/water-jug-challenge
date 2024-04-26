@@ -1,7 +1,11 @@
 import request from 'supertest';
-import { app } from '../src/index.js';
+import { app, server } from "../src/index";
 
 describe('POST /mix', () => {
+  afterAll(() => {
+    server.close();
+  })
+
   it('should mix jugs and return result', async () => {
     const response = await request(app)
       .post('/mix')

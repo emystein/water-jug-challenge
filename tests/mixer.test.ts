@@ -1,7 +1,7 @@
-import Gallons from '../src/model/volume.js';
-import Mixer, { MixResult } from '../src/model/mixer.js';
-import Jugs from '../src/model/jugs.js';
-import MixLogger from '../src/model/mixLogger.js';
+import Gallons from '../src/model/volume';
+import Mixer, { MixResult } from '../src/model/mixer';
+import Jugs from '../src/model/jugs';
+import MixLogger from '../src/model/mixLogger';
 
 describe('Any of the Jugs has the same Capacity than the target Volume', () => {
   it.each([

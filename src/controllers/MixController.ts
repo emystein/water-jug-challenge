@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { MixService } from '../services/MixService.js';
-import Gallons from '../model/volume.js';
+import { MixService } from '../services/MixService';
+import Gallons from '../model/volume';
 
 const mixService = new MixService();
 

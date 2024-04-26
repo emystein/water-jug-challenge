@@ -1,8 +1,8 @@
-import Gallons from '../src/model/volume.js';
-import Jugs from '../src/model/jugs.js';
-import MixLogger, { MixLogEntry } from '../src/model/mixLogger.js';
-import Mixer, { MixResult } from '../src/model/mixer.js';
-import Jug from '../src/model/jug.js';
+import Gallons from '../src/model/volume';
+import Jugs from '../src/model/jugs';
+import MixLogger, { MixLogEntry } from '../src/model/mixLogger';
+import Mixer, { MixResult } from '../src/model/mixer';
+import Jug from '../src/model/jug';
 
 function verifyLogEntry(logEntry: MixLogEntry,
                         expectedStep: number,

@@ -1,8 +1,8 @@
-import MixLogger, { MixLogEntry } from '../model/mixLogger.js';
-import Jugs from '../model/jugs.js';
-import { PositiveGallons } from '../model/volume.js';
-import Mixer, { MixResult } from '../model/mixer.js';
-import Jug from '../model/jug.js';
+import MixLogger, { MixLogEntry } from '../model/mixLogger';
+import Jugs from '../model/jugs';
+import { PositiveGallons } from '../model/volume';
+import Mixer, { MixResult } from '../model/mixer';
+import Jug from '../model/jug';
 
 export class MixService {
   constructor() {
