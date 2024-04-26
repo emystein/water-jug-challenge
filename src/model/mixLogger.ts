@@ -1,6 +1,6 @@
 import Jug from './jug.js';
 import Jugs from './jugs.js';
-import { MixAction } from './bartender.js';
+import { MixAction } from './mixer.js';
 
 export class MixLogEntry {
   constructor(

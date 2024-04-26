@@ -1,5 +1,5 @@
 import Gallons from '../src/model/gallons.js';
-import Bartender, { MixResult } from '../src/model/bartender.js';
+import Mixer, { MixResult } from '../src/model/mixer.js';
 import Jugs from '../src/model/jugs.js';
 import MixLogger from '../src/model/mixLogger.js';
 
@@ -13,8 +13,8 @@ describe('Any of the Jugs has the same Capacity than the target Volume', () => {
     const expectedGallons = new Gallons(expectedAmount);
     const jugs = Jugs.withCapacities(new Gallons(jugXCapacity), new Gallons(jugYCapacity));
     const logger = new MixLogger(jugs);
-    const bartender = new Bartender(expectedGallons, logger);
-    expect(bartender.mix(jugs)).toEqual(MixResult.Solved);
+    const mixer = new Mixer(expectedGallons, logger);
+    expect(mixer.mix(jugs)).toEqual(MixResult.Solved);
   });
 });
 
@@ -38,8 +38,8 @@ describe('One of the Jugs has less Capacity than the target Volume, the other Ju
     const expectedGallons = new Gallons(expectedAmount);
     const jugs = Jugs.withCapacities(new Gallons(jugXCapacity), new Gallons(jugYCapacity));
     const logger = new MixLogger(jugs);
-    const bartender = new Bartender(expectedGallons, logger);
-    expect(bartender.mix(jugs)).toEqual(MixResult.Solved);
+    const mixer = new Mixer(expectedGallons, logger);
+    expect(mixer.mix(jugs)).toEqual(MixResult.Solved);
   });
 });
 
@@ -54,7 +54,7 @@ describe('No solution', () => {
     const expectedGallons = new Gallons(expectedAmount);
     const jugs = Jugs.withCapacities(new Gallons(jugXCapacity), new Gallons(jugYCapacity));
     const logger = new MixLogger(jugs);
-    const bartender = new Bartender(expectedGallons, logger);
-    expect(bartender.mix(jugs)).toEqual(MixResult.NoSolution);
+    const mixer = new Mixer(expectedGallons, logger);
+    expect(mixer.mix(jugs)).toEqual(MixResult.NoSolution);
   });
 });

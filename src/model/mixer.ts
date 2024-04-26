@@ -43,7 +43,7 @@ class EmptyJug implements MixAction {
   }
 }
 
-export default class Bartender {
+export default class Mixer {
   constructor(public targetVolume: Gallons, private logger: MixLogger) {
   }
 
