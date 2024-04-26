@@ -51,7 +51,7 @@ export default class Jugs {
     return jug.name == this.jugX.name ? this.jugY : this.jugX;
   }
 
-  jugsWithTheSameCapacityThan(targetVolume: Gallons) {
+  allWithTheSameCapacityThan(targetVolume: Gallons) {
     return this.all.filter(jug => jug.hasCapacity(targetVolume));
   }
 }

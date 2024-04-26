@@ -49,7 +49,7 @@ export default class Bartender {
 
   mix(jugs: Jugs): MixResult {
     if (jugs.anyJugHasTheSameCapacityThan(this.targetVolume)) {
-      const fillingJug = jugs.jugsWithTheSameCapacityThan(this.targetVolume)[0];
+      const fillingJug = jugs.allWithTheSameCapacityThan(this.targetVolume)[0];
       fillingJug.fill();
       this.logger.addEntry(new FillJug(fillingJug));
       return MixResult.Solved;
@@ -80,11 +80,7 @@ export default class Bartender {
 
     const solved = jugs.anyJugIsFilledWithVolume(this.targetVolume);
 
-    if (solved) {
-      return MixResult.Solved;
-    } else {
-      return MixResult.NoSolution;
-    }
+    return solved ? MixResult.Solved : MixResult.NoSolution;
   }
 }
 
