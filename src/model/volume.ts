@@ -1,6 +1,8 @@
 export default class Gallons {
   constructor(public amount: number) {
-
+    if (amount < 0) {
+      throw new IllegalVolume(amount);
+    }
   }
 
   isEqualTo(amountExpected: Gallons) {
@@ -33,5 +35,11 @@ export default class Gallons {
 
   differenceWith(other: Gallons) {
     return new Gallons(Math.abs(this.minus(other).amount));
+  }
+}
+
+export class IllegalVolume extends Error {
+  constructor(illegalValue: number) {
+    super(`Illegal Volume: ${illegalValue}`);
   }
 }

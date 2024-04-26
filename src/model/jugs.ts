@@ -1,5 +1,5 @@
 import Jug from './jug.js';
-import Gallons from './gallons.js';
+import Gallons from './volume.js';
 
 export default class Jugs {
   constructor(public jugX: Jug, public jugY: Jug) {

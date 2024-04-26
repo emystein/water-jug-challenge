@@ -1,5 +1,5 @@
 import Jug from './jug.js';
-import Gallons from './gallons.js';
+import Gallons from './volume.js';
 
 export abstract class MixAction {
   protected constructor(

@@ -1,4 +1,4 @@
-import Gallons from './gallons.js';
+import Gallons from './volume.js';
 
 export default class Jug {
   constructor(public name: string, public capacity: Gallons, public volumeFilled = new Gallons(0)) {

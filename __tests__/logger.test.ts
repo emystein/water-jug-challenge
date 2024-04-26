@@ -1,4 +1,4 @@
-import Gallons from '../src/model/gallons.js';
+import Gallons from '../src/model/volume.js';
 import Jugs from '../src/model/jugs.js';
 import MixLogger, { MixLogEntry } from '../src/model/mixLogger.js';
 import Mixer, { MixResult } from '../src/model/mixer.js';
