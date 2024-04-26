@@ -1,12 +1,12 @@
 import Jug from './jug.js';
-import Gallons from './volume.js';
+import Gallons, { PositiveGallons } from './volume.js';
 
 export default class Jugs {
   constructor(public jugX: Jug, public jugY: Jug) {
 
   }
 
-  static withCapacities(capacityX: Gallons, capacityY: Gallons) {
+  static withCapacities(capacityX: PositiveGallons, capacityY: PositiveGallons) {
     return new Jugs(new Jug("X", capacityX), new Jug("Y", capacityY));
   }
 

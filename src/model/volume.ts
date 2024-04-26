@@ -5,6 +5,10 @@ export default class Gallons {
     }
   }
 
+  static positive(amount: number): PositiveGallons {
+    return new PositiveGallons(amount);
+  }
+
   isEqualTo(amountExpected: Gallons) {
     return this.amount == amountExpected.amount;
   }

@@ -1,4 +1,4 @@
-import Gallons, { PositiveGallons } from '../src/model/volume.js';
+import Gallons from '../src/model/volume.js';
 import Mixer, { MixResult } from '../src/model/mixer.js';
 import Jugs from '../src/model/jugs.js';
 import MixLogger from '../src/model/mixLogger.js';
@@ -10,8 +10,8 @@ describe('Any of the Jugs has the same Capacity than the target Volume', () => {
     [1, 2, 1],
   ])
   ('Expected: %p gal. Jug X capacity: %p gal. Jug Y capacity: %p gal. Fill Jug X', (expectedAmount: number, jugXCapacity: number, jugYCapacity: number) => {
-    const expectedGallons = new PositiveGallons(expectedAmount);
-    const jugs = Jugs.withCapacities(new Gallons(jugXCapacity), new Gallons(jugYCapacity));
+    const expectedGallons = Gallons.positive(expectedAmount);
+    const jugs = Jugs.withCapacities(Gallons.positive(jugXCapacity), Gallons.positive(jugYCapacity));
     const logger = new MixLogger(jugs);
     const mixer = new Mixer(expectedGallons, logger);
     expect(mixer.mix(jugs)).toEqual(MixResult.Solved);
@@ -35,8 +35,8 @@ describe('One of the Jugs has less Capacity than the target Volume, the other Ju
     [96, 100, 2],
   ])
   ('Expected: %p gal. Jug X capacity: %p gal. Jug Y capacity: %p gal', (expectedAmount: number, jugXCapacity: number, jugYCapacity: number) => {
-    const expectedGallons = new PositiveGallons(expectedAmount);
-    const jugs = Jugs.withCapacities(new Gallons(jugXCapacity), new Gallons(jugYCapacity));
+    const expectedGallons = Gallons.positive(expectedAmount);
+    const jugs = Jugs.withCapacities(Gallons.positive(jugXCapacity), Gallons.positive(jugYCapacity));
     const logger = new MixLogger(jugs);
     const mixer = new Mixer(expectedGallons, logger);
     expect(mixer.mix(jugs)).toEqual(MixResult.Solved);
@@ -51,8 +51,8 @@ describe('No solution', () => {
     [2, 10, 6],
   ])
   ('Expected: %p gal. Jug X capacity: %p gal. Jug Y capacity: %p gal', (expectedAmount: number, jugXCapacity: number, jugYCapacity: number) => {
-    const expectedGallons = new PositiveGallons(expectedAmount);
-    const jugs = Jugs.withCapacities(new Gallons(jugXCapacity), new Gallons(jugYCapacity));
+    const expectedGallons = Gallons.positive(expectedAmount);
+    const jugs = Jugs.withCapacities(Gallons.positive(jugXCapacity), Gallons.positive(jugYCapacity));
     const logger = new MixLogger(jugs);
     const mixer = new Mixer(expectedGallons, logger);
     expect(mixer.mix(jugs)).toEqual(MixResult.NoSolution);
