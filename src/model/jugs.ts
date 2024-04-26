@@ -6,23 +6,23 @@ export default class Jugs {
 
   }
 
-  static withCapacities(capacityX: PositiveGallons, capacityY: PositiveGallons) {
+  static withCapacities(capacityX: PositiveGallons, capacityY: PositiveGallons): Jugs {
     return new Jugs(new Jug("X", capacityX), new Jug("Y", capacityY));
   }
 
-  get all() {
+  get all(): Jug[] {
     return [this.jugX, this.jugY];
   }
 
-  get smallerJug() {
+  get smallerJug(): Jug {
     return this.jugX.hasLessOrEqualCapacityThan(this.jugY) ? this.jugX : this.jugY;
   }
 
-  get biggerJug() {
+  get biggerJug(): Jug {
     return this.jugX.hasGreaterCapacityThan(this.jugY) ? this.jugX : this.jugY;
   }
 
-  jugWithNearestCapacityTo(targetVolume: Gallons) {
+  jugWithNearestCapacityTo(targetVolume: Gallons): Jug {
     if (this.smallerJugCapacityUpToTargetVolume(targetVolume)
       .isLessThan(this.biggerJugCapacityUpToTargetVolume(targetVolume))) {
       return this.smallerJug;
@@ -31,27 +31,27 @@ export default class Jugs {
     }
   }
 
-  smallerJugCapacityUpToTargetVolume(targetVolume: Gallons) {
+  smallerJugCapacityUpToTargetVolume(targetVolume: Gallons): Gallons {
     return this.smallerJug.capacityUpTo(targetVolume);
   }
 
-  biggerJugCapacityUpToTargetVolume(targetVolume: Gallons) {
+  biggerJugCapacityUpToTargetVolume(targetVolume: Gallons): Gallons {
     return this.biggerJug.capacityUpTo(targetVolume);
   }
 
-  haveAJugWithTheSameCapacityThan(targetVolume: Gallons) {
+  haveAJugWithTheSameCapacityThan(targetVolume: Gallons): boolean {
     return this.jugX.capacity.isEqualTo(targetVolume) || this.jugY.capacity.isEqualTo(targetVolume);
   }
 
-  haveAJugFilledWithVolume(targetVolume: Gallons) {
+  haveAJugFilledWithVolume(targetVolume: Gallons): boolean {
     return this.jugX.volumeFilled.isEqualTo(targetVolume) || this.jugY.volumeFilled.isEqualTo(targetVolume);
   }
 
-  otherJugThan(jug: Jug) {
+  otherJugThan(jug: Jug): Jug {
     return jug.name == this.jugX.name ? this.jugY : this.jugX;
   }
 
-  allWithTheSameCapacityThan(targetVolume: Gallons) {
+  allWithTheSameCapacityThan(targetVolume: Gallons): Jug[] {
     return this.all.filter(jug => jug.hasCapacity(targetVolume));
   }
 }

@@ -11,7 +11,7 @@ function verifyLogEntry(logEntry: MixLogEntry,
                         expectedJugY: Jug,
                         expectedJugYFilledAmount: Gallons,
                         expectedActionText: string,
-) {
+): void {
   expect(logEntry.step).toEqual(expectedStep);
   expect(logEntry.triggeringJug).toEqual(expectedJugX.cloneFilledWith(expectedJugXFilledAmount));
   expect(logEntry.otherJug).toEqual(expectedJugY.cloneFilledWith(expectedJugYFilledAmount));

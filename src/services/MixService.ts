@@ -2,13 +2,14 @@ import MixLogger, { MixLogEntry } from '../model/mixLogger.js';
 import Jugs from '../model/jugs.js';
 import { PositiveGallons } from '../model/volume.js';
 import Mixer, { MixResult } from '../model/mixer.js';
+import Jug from '../model/jug.js';
 
 export class MixService {
   constructor() {
 
   }
 
-  public mix(jugXCapacity: PositiveGallons, jugYCapacity: PositiveGallons, targetVolume: PositiveGallons) {
+  public mix(jugXCapacity: PositiveGallons, jugYCapacity: PositiveGallons, targetVolume: PositiveGallons): MixReport {
     const jugs = Jugs.withCapacities(jugXCapacity, jugYCapacity);
     const logger = new MixLogger(jugs);
     const mixer = new Mixer(targetVolume, logger);
@@ -35,15 +36,15 @@ export class MixReport {
     }
   }
 
-  jugXIn(logEntry: MixLogEntry) {
+  jugXIn(logEntry: MixLogEntry): Jug {
     return this.jugWithNameInLogEntry('X', logEntry);
   }
 
-  jugYIn(logEntry: MixLogEntry) {
+  jugYIn(logEntry: MixLogEntry): Jug {
     return this.jugWithNameInLogEntry('Y', logEntry);
   }
 
-  jugWithNameInLogEntry(name: string, logEntry: MixLogEntry) {
+  jugWithNameInLogEntry(name: string, logEntry: MixLogEntry): Jug {
     return logEntry.triggeringJug.name == name ? logEntry.triggeringJug : logEntry.otherJug;
   }
 }

@@ -37,17 +37,17 @@ export default class Mixer {
     return isSolved ? MixResult.Solved : MixResult.NoSolution;
   }
 
-  fill(aJug: Jug) {
+  fill(aJug: Jug): void {
     aJug.fill();
     this.logger.addEntry(new FillJug(aJug));
   }
 
-  empty(aJug: Jug) {
+  empty(aJug: Jug): void {
     aJug.empty();
     this.logger.addEntry(new EmptyJug(aJug));
   }
 
-  transferBetween(sender: Jug, receiver: Jug, accumulatedVolume: Gallons) {
+  transferBetween(sender: Jug, receiver: Jug, accumulatedVolume: Gallons): void {
     sender.transferContentTo(receiver);
     this.logger.addEntry(new TransferContentBetweenJugs(sender, receiver, accumulatedVolume));
   }

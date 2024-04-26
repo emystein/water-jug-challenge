@@ -5,23 +5,23 @@ export default class Jug {
 
   }
 
-  fill() {
+  fill(): void {
     this.volumeFilled = this.capacity;
   }
 
-  add(amountToAdd: Gallons) {
+  add(amountToAdd: Gallons): void {
     this.volumeFilled = this.volumeFilled.plus(amountToAdd);
   }
 
-  remove(amountToRemove: Gallons) {
+  remove(amountToRemove: Gallons): void {
     this.volumeFilled = this.volumeFilled.minus(amountToRemove);
   }
 
-  empty() {
+  empty(): void {
     this.volumeFilled = new Gallons(0);
   }
 
-  transferContentTo(otherJug: Jug) {
+  transferContentTo(otherJug: Jug): Gallons {
     if (this.filledContentFitsCompletelyIn(otherJug)) {
       otherJug.add(this.capacity);
       this.empty();
@@ -34,35 +34,35 @@ export default class Jug {
     }
   }
 
-  filledContentFitsCompletelyIn(other: Jug) {
+  filledContentFitsCompletelyIn(other: Jug): boolean {
     return this.volumeFilled.isLessOrEqualThan(other.remainingToFill());
   }
 
-  remainingToFill() {
+  remainingToFill(): Gallons {
     return this.capacity.minus(this.volumeFilled);
   }
 
-  hasLessOrEqualCapacityThan(other: Jug) {
+  hasLessOrEqualCapacityThan(other: Jug): boolean {
     return this.capacity.isLessOrEqualThan(other.capacity);
   }
 
-  hasGreaterCapacityThan(other: Jug) {
+  hasGreaterCapacityThan(other: Jug): boolean {
     return this.capacity.isGreaterThan(other.capacity);
   }
 
-  hasCapacity(targetVolume: Gallons) {
+  hasCapacity(targetVolume: Gallons): boolean {
     return this.capacity.isEqualTo(targetVolume);
   }
 
-  capacityUpTo(otherVolume: Gallons) {
+  capacityUpTo(otherVolume: Gallons): Gallons {
     return this.capacity.differenceWith(otherVolume);
   }
 
-  clone() {
+  clone(): Jug {
     return new Jug(this.name, this.capacity, this.volumeFilled);
   }
 
-  cloneFilledWith(volumeFilled: Gallons) {
+  cloneFilledWith(volumeFilled: Gallons): Jug {
     return new Jug(this.name, this.capacity, volumeFilled);
   }
 }

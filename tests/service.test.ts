@@ -6,7 +6,7 @@ function verifyReportRow(reportRow: MixReportRow,
                         expectedJugXFilledAmount: number,
                         expectedJugYFilledAmount: number,
                         expectedActionText: string,
-) {
+): void {
   expect(reportRow.step).toEqual(expectedStep);
   expect(reportRow.jugX).toEqual(expectedJugXFilledAmount);
   expect(reportRow.jugY).toEqual(expectedJugYFilledAmount);

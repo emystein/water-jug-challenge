@@ -9,35 +9,31 @@ export default class Gallons {
     return new PositiveGallons(amount);
   }
 
-  isEqualTo(amountExpected: Gallons) {
+  isEqualTo(amountExpected: Gallons): boolean {
     return this.amount == amountExpected.amount;
   }
 
-  isLessThan(other: Gallons) {
+  isLessThan(other: Gallons): boolean {
     return this.amount < other.amount;
   }
 
-  isLessOrEqualThan(other: Gallons) {
+  isLessOrEqualThan(other: Gallons): boolean {
     return this.amount <= other.amount;
   }
 
-  isGreaterThan(other: Gallons) {
+  isGreaterThan(other: Gallons): boolean {
     return this.amount > other.amount;
   }
 
-  isGreaterOrEqualThan(other: Gallons) {
-    return this.amount >= other.amount;
-  }
-
-  plus(amountToAdd: Gallons) {
+  plus(amountToAdd: Gallons): Gallons {
     return new Gallons(this.amount + amountToAdd.amount);
   }
 
-  minus(other: Gallons) {
+  minus(other: Gallons): Gallons {
     return new Gallons(this.amount - other.amount);
   }
 
-  differenceWith(other: Gallons) {
+  differenceWith(other: Gallons): Gallons {
     return new Gallons(Math.abs(this.amount - other.amount));
   }
 }
