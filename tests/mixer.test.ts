@@ -3,18 +3,20 @@ import Mixer, { MixResult } from '../src/model/mixer';
 import Jugs from '../src/model/jugs';
 import MixLogger from '../src/model/mixLogger';
 
+function mix(jugXCapacity: number, jugYCapacity: number, targetVolume: number): MixResult {
+  const jugs = Jugs.withCapacities(Gallons.positive(jugXCapacity), Gallons.positive(jugYCapacity));
+  const mixer = new Mixer(Gallons.positive(targetVolume), new MixLogger(jugs));
+  return mixer.mix(jugs);
+}
+
 describe('Any of the Jugs has the same Capacity than the target Volume', () => {
   it.each([
     [1, 1, 1],
     [1, 1, 2],
     [1, 2, 1],
   ])
-  ('Expected: %p gal. Jug X capacity: %p gal. Jug Y capacity: %p gal. Fill Jug X', (expectedAmount: number, jugXCapacity: number, jugYCapacity: number) => {
-    const expectedGallons = Gallons.positive(expectedAmount);
-    const jugs = Jugs.withCapacities(Gallons.positive(jugXCapacity), Gallons.positive(jugYCapacity));
-    const logger = new MixLogger(jugs);
-    const mixer = new Mixer(expectedGallons, logger);
-    expect(mixer.mix(jugs)).toEqual(MixResult.Solved);
+  ('Target Volume: %p gal. Jug X capacity: %p gal. Jug Y capacity: %p gal. Fill Jug X', (targetVolume: number, jugXCapacity: number, jugYCapacity: number) => {
+    expect(mix(jugXCapacity, jugYCapacity, targetVolume)).toEqual(MixResult.Solved);
   });
 });
 
@@ -34,12 +36,8 @@ describe('One of the Jugs has less Capacity than the target Volume, the other Ju
     [8, 10, 2],
     [96, 100, 2],
   ])
-  ('Expected: %p gal. Jug X capacity: %p gal. Jug Y capacity: %p gal', (expectedAmount: number, jugXCapacity: number, jugYCapacity: number) => {
-    const expectedGallons = Gallons.positive(expectedAmount);
-    const jugs = Jugs.withCapacities(Gallons.positive(jugXCapacity), Gallons.positive(jugYCapacity));
-    const logger = new MixLogger(jugs);
-    const mixer = new Mixer(expectedGallons, logger);
-    expect(mixer.mix(jugs)).toEqual(MixResult.Solved);
+  ('Target Volume: %p gal. Jug X capacity: %p gal. Jug Y capacity: %p gal', (targetVolume: number, jugXCapacity: number, jugYCapacity: number) => {
+    expect(mix(jugXCapacity, jugYCapacity, targetVolume)).toEqual(MixResult.Solved);
   });
 });
 
@@ -50,11 +48,7 @@ describe('No solution', () => {
     [2, 6, 10],
     [2, 10, 6],
   ])
-  ('Expected: %p gal. Jug X capacity: %p gal. Jug Y capacity: %p gal', (expectedAmount: number, jugXCapacity: number, jugYCapacity: number) => {
-    const expectedGallons = Gallons.positive(expectedAmount);
-    const jugs = Jugs.withCapacities(Gallons.positive(jugXCapacity), Gallons.positive(jugYCapacity));
-    const logger = new MixLogger(jugs);
-    const mixer = new Mixer(expectedGallons, logger);
-    expect(mixer.mix(jugs)).toEqual(MixResult.NoSolution);
+  ('Target Volume: %p gal. Jug X capacity: %p gal. Jug Y capacity: %p gal', (targetVolume: number, jugXCapacity: number, jugYCapacity: number) => {
+    expect(mix(jugXCapacity, jugYCapacity, targetVolume)).toEqual(MixResult.NoSolution);
   });
 });
