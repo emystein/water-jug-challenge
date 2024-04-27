@@ -25,7 +25,7 @@ describe('POST /mix', () => {
   it('should return 400 if jugX capacity is negative', async () => {
     const response = await request(app)
       .post('/mix')
-      .send({ jugX: -5, jugY: 10, targetVolume: 4 });
+      .send({ jugX: -1, jugY: 10, targetVolume: 4 });
     expect(response.status).toBe(400);
     expect(response.body).toEqual(failedConstraintsDescription);
   });
@@ -57,7 +57,7 @@ describe('POST /mix', () => {
   it('should return 400 if targetVolume is negative', async () => {
     const response = await request(app)
       .post('/mix')
-      .send({ jugX: 2, jugY: 10, targetVolume: -4 });
+      .send({ jugX: 2, jugY: 10, targetVolume: -1 });
     expect(response.status).toBe(400);
     expect(response.body).toEqual(failedConstraintsDescription);
   });
