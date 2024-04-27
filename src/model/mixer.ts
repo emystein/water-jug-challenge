@@ -29,12 +29,12 @@ export default class Mixer {
     this.logger.addEntry(new FillJug(aJug));
   }
 
-  public empty(aJug: Jug): void {
+  empty(aJug: Jug): void {
     aJug.empty();
     this.logger.addEntry(new EmptyJug(aJug));
   }
 
-  public transferBetween(sender: Jug, receiver: Jug, accumulatedVolume: Gallons): void {
+  transferBetween(sender: Jug, receiver: Jug, accumulatedVolume: Gallons): void {
     sender.transferContentTo(receiver);
     this.logger.addEntry(new TransferContentBetweenJugs(sender, receiver, accumulatedVolume));
   }
@@ -54,7 +54,7 @@ abstract class MixRecipe {
 
   abstract prepare(jugs: Jugs, targetVolume: Gallons): void;
 
-  private checkResult(jugs: Jugs, targetVolume: Gallons) {
+  private checkResult(jugs: Jugs, targetVolume: Gallons): MixResult {
     if (jugs.haveAJugFilledWithVolume(targetVolume)) {
       return MixResult.Solved;
     } else {
