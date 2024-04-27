@@ -1,5 +1,6 @@
 import request from 'supertest';
 import { app, server } from "../src/index";
+import { failedConstraintsDescription } from '../src/controllers/MixController';
 
 describe('POST /mix', () => {
   afterAll(() => {
@@ -13,27 +14,51 @@ describe('POST /mix', () => {
     expect(response.status).toBe(200);
   });
 
-  it('should return 400 if jugX is negative', async () => {
+  it('should return 400 if jugX capacity is zero', async () => {
     const response = await request(app)
       .post('/mix')
-      .send({ jugX: -5, jugY: 3, targetVolume: 4 });
+      .send({ jugX: 0, jugY: 10, targetVolume: 4 });
     expect(response.status).toBe(400);
-    expect(response.body).toEqual({ error: 'JugX, jugY, and targetVolume must be positive numbers' });
+    expect(response.body).toEqual(failedConstraintsDescription);
+  });
+
+  it('should return 400 if jugX capacity is negative', async () => {
+    const response = await request(app)
+      .post('/mix')
+      .send({ jugX: -5, jugY: 10, targetVolume: 4 });
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual(failedConstraintsDescription);
+  });
+
+  it('should return 400 if jugY capacity is zero', async () => {
+    const response = await request(app)
+      .post('/mix')
+      .send({ jugX: 2, jugY: 0, targetVolume: 4 });
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual(failedConstraintsDescription);
   });
 
   it('should return 400 if jugY is negative', async () => {
     const response = await request(app)
       .post('/mix')
-      .send({ jugX: 5, jugY: -3, targetVolume: 4 });
+      .send({ jugX: 2, jugY: -1, targetVolume: 4 });
     expect(response.status).toBe(400);
-    expect(response.body).toEqual({ error: 'JugX, jugY, and targetVolume must be positive numbers' });
+    expect(response.body).toEqual(failedConstraintsDescription);
+  });
+
+  it('should return 400 if targetVolume is zero', async () => {
+    const response = await request(app)
+      .post('/mix')
+      .send({ jugX: 2, jugY: 10, targetVolume: 0 });
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual(failedConstraintsDescription);
   });
 
   it('should return 400 if targetVolume is negative', async () => {
     const response = await request(app)
       .post('/mix')
-      .send({ jugX: 5, jugY: 3, targetVolume: -4 });
+      .send({ jugX: 2, jugY: 10, targetVolume: -4 });
     expect(response.status).toBe(400);
-    expect(response.body).toEqual({ error: 'JugX, jugY, and targetVolume must be positive numbers' });
+    expect(response.body).toEqual(failedConstraintsDescription);
   });
 });
