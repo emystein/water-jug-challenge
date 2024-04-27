@@ -7,7 +7,7 @@ import Jug from './jug';
 export default class Mixer {
   private recipes: MixRecipe[];
 
-  constructor(public targetVolume: PositiveGallons, private logger: MixLogger) {
+  constructor(private logger: MixLogger) {
     this.recipes = [
       new FillOnlyOneJug(this),
       new TransferFromSmallerToBiggerJug(this),
@@ -15,13 +15,9 @@ export default class Mixer {
     ]
   }
 
-  mix(jugs: Jugs): MixResult {
-    const recipe = this.recipes.find(aRecipe => aRecipe.appliesTo(jugs, this.targetVolume));
-    if (recipe) {
-      return recipe.mix(jugs, this.targetVolume);
-    } else {
-      return MixResult.NoSolution;
-    }
+  mix(jugs: Jugs, targetVolume: PositiveGallons): MixResult {
+    const recipe = this.recipes.find(aRecipe => aRecipe.appliesTo(jugs, targetVolume));
+    return recipe.mix(jugs, targetVolume);
   }
 
   fill(aJug: Jug): void {

@@ -5,8 +5,8 @@ import MixLogger from '../src/model/mixLogger';
 
 function mix(jugXCapacity: number, jugYCapacity: number, targetVolume: number): MixResult {
   const jugs = Jugs.withCapacities(Gallons.positive(jugXCapacity), Gallons.positive(jugYCapacity));
-  const mixer = new Mixer(Gallons.positive(targetVolume), new MixLogger(jugs));
-  return mixer.mix(jugs);
+  const mixer = new Mixer(new MixLogger(jugs));
+  return mixer.mix(jugs, Gallons.positive(targetVolume));
 }
 
 describe('Any of the Jugs has the same Capacity than the target Volume', () => {

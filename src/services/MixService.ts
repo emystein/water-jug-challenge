@@ -12,8 +12,8 @@ export class MixService {
   public mix(jugXCapacity: PositiveGallons, jugYCapacity: PositiveGallons, targetVolume: PositiveGallons): MixReport {
     const jugs = Jugs.withCapacities(jugXCapacity, jugYCapacity);
     const logger = new MixLogger(jugs);
-    const mixer = new Mixer(targetVolume, logger);
-    const mixResult = mixer.mix(jugs);
+    const mixer = new Mixer(logger);
+    const mixResult = mixer.mix(jugs, targetVolume);
     return new MixReport(mixResult, logger);
   }
 }

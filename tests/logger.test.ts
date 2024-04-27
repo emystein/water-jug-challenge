@@ -20,36 +20,36 @@ function verifyLogEntry(logEntry: MixLogEntry,
 }
 
 test('Log steps when Jug X has the same Capacity than the target Volume', () => {
-  const expectedGallons = new Gallons(1);
+  const targetVolume = new Gallons(1);
   const jugs = Jugs.withCapacities(Gallons.positive(1), Gallons.positive(1));
   const logger = new MixLogger(jugs);
-  const mixer = new Mixer(expectedGallons, logger);
+  const mixer = new Mixer(logger);
 
-  expect(mixer.mix(jugs)).toEqual(MixResult.Solved);
+  expect(mixer.mix(jugs, targetVolume)).toEqual(MixResult.Solved);
 
   expect(logger.entries.length).toEqual(1);
   verifyLogEntry(logger.entries[0], 1, jugs.jugX, new Gallons(1), jugs.jugY, new Gallons(0), 'Fill Jug X');
 });
 
 test('Log steps when Jug Y has the same Capacity than the target Volume', () => {
-  const expectedGallons = new Gallons(1);
+  const targetVolume = new Gallons(1);
   const jugs = Jugs.withCapacities(Gallons.positive(2), Gallons.positive(1));
   const logger = new MixLogger(jugs);
-  const mixer = new Mixer(expectedGallons, logger);
+  const mixer = new Mixer(logger);
 
-  expect(mixer.mix(jugs)).toEqual(MixResult.Solved);
+  expect(mixer.mix(jugs, targetVolume)).toEqual(MixResult.Solved);
 
   expect(logger.entries.length).toEqual(1);
   verifyLogEntry(logger.entries[0], 1, jugs.jugX, new Gallons(0), jugs.jugY, new Gallons(1), 'Fill Jug Y');
 });
 
 test('Log steps when smaller Jug transfers to bigger Jug', () => {
-  const expectedGallons = Gallons.positive(4);
+  const targetVolume = new Gallons(4);
   const jugs = Jugs.withCapacities(Gallons.positive(2), Gallons.positive(10));
   const logger = new MixLogger(jugs);
-  const mixer = new Mixer(expectedGallons, logger);
+  const mixer = new Mixer( logger);
 
-  expect(mixer.mix(jugs)).toEqual(MixResult.Solved);
+  expect(mixer.mix(jugs, targetVolume)).toEqual(MixResult.Solved);
 
   expect(logger.entries.length).toEqual(4);
   verifyLogEntry(logger.entries[0], 1, jugs.jugX, jugs.jugX.capacity, jugs.jugY, new Gallons(0), 'Fill Jug X');
@@ -59,12 +59,12 @@ test('Log steps when smaller Jug transfers to bigger Jug', () => {
 });
 
 test('Log steps when bigger Jug transfers to smaller Jug', () => {
-  const expectedGallons = Gallons.positive(96);
+  const targetVolume = new Gallons(96);
   const jugs = Jugs.withCapacities(Gallons.positive(2), Gallons.positive(100));
   const logger = new MixLogger(jugs);
-  const mixer = new Mixer(expectedGallons, logger);
+  const mixer = new Mixer(logger);
 
-  expect(mixer.mix(jugs)).toEqual(MixResult.Solved);
+  expect(mixer.mix(jugs, targetVolume)).toEqual(MixResult.Solved);
 
   expect(logger.entries.length).toEqual(5);
   verifyLogEntry(logger.entries[0], 1, jugs.jugX, new Gallons(0), jugs.jugY, jugs.jugY.capacity, 'Fill Jug Y');
