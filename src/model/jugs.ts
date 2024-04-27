@@ -55,11 +55,17 @@ export default class Jugs {
     return this.all.filter(jug => jug.hasCapacity(targetVolume));
   }
 
-  identifyJugs(jug1: Jug, jug2: Jug): { jugX: Jug, jugY: Jug } {
+  identifyJugs(jug1: Jug, jug2: Jug | undefined): { jugX: Jug, jugY: Jug } {
     if (jug1.name == this.jugX.name) {
-      return { jugX: jug1, jugY: jug2 };
+      return {
+        jugX: jug1,
+        jugY: jug2 || this.jugY
+      };
     } else {
-      return { jugX: jug2, jugY: jug1 };
+      return {
+        jugX: jug2 || this.jugX,
+        jugY: jug1
+      };
     }
   }
 }
