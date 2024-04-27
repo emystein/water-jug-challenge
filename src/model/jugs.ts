@@ -7,7 +7,7 @@ export default class Jugs {
   }
 
   static withCapacities(capacityX: PositiveGallons, capacityY: PositiveGallons): Jugs {
-    return new Jugs(new Jug("X", capacityX), new Jug("Y", capacityY));
+    return new Jugs(new Jug('X', capacityX), new Jug('Y', capacityY));
   }
 
   get all(): Jug[] {
@@ -53,5 +53,13 @@ export default class Jugs {
 
   allWithTheSameCapacityThan(targetVolume: Gallons): Jug[] {
     return this.all.filter(jug => jug.hasCapacity(targetVolume));
+  }
+
+  identifyJugs(jug1: Jug, jug2: Jug): { jugX: Jug, jugY: Jug } {
+    if (jug1.name == this.jugX.name) {
+      return { jugX: jug1, jugY: jug2 };
+    } else {
+      return { jugX: jug2, jugY: jug1 };
+    }
   }
 }

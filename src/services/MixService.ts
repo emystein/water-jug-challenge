@@ -45,7 +45,7 @@ export class MixReport {
   }
 
   jugWithNameInLogEntry(name: string, logEntry: MixLogEntry): Jug {
-    return logEntry.triggeringJug.name == name ? logEntry.triggeringJug : logEntry.otherJug;
+    return logEntry.jugX.name == name ? logEntry.jugX : logEntry.jugY;
   }
 }
 

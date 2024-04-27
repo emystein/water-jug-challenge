@@ -5,8 +5,8 @@ import { MixAction } from './mixActions';
 export class MixLogEntry {
   constructor(
     public step: number,
-    public triggeringJug: Jug,
-    public otherJug: Jug,
+    public jugX: Jug,
+    public jugY: Jug,
     public action: string,
   ) {
 
@@ -23,6 +23,7 @@ export default class MixLogger {
   addEntry(action: MixAction): void {
     const step = this.entries.length + 1;
     const otherJug = action.otherJug ? action.otherJug : { ...this.jugs.otherJugThan(action.triggeringJug) } as Jug;
-    this.entries.push(new MixLogEntry(step, action.triggeringJug, otherJug, action.text));
+    const { jugX, jugY } = this.jugs.identifyJugs(action.triggeringJug, otherJug);
+    this.entries.push(new MixLogEntry(step, jugX, jugY, action.text));
   }
 }
