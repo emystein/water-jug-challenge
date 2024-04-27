@@ -65,4 +65,8 @@ export default class Jug {
   cloneFilledWith(volumeFilled: Gallons): Jug {
     return new Jug(this.name, this.capacity, volumeFilled);
   }
+
+  isNotEmpty() {
+    return this.volumeFilled.isHigherThan(new Gallons(0));
+  }
 }

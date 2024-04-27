@@ -26,8 +26,10 @@ export default class Mixer {
   }
 
   empty(aJug: Jug): void {
-    aJug.empty();
-    this.logger.addEntry(new EmptyJug(aJug));
+    if (aJug.isNotEmpty()) {
+      aJug.empty();
+      this.logger.addEntry(new EmptyJug(aJug));
+    }
   }
 
   transferBetween(sender: Jug, receiver: Jug, accumulatedVolume: Gallons): void {

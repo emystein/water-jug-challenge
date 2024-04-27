@@ -66,12 +66,11 @@ test('Log steps when bigger Jug transfers to smaller Jug', () => {
 
   expect(mixer.mix(jugs, targetVolume)).toEqual(MixResult.Solved);
 
-  expect(logger.entries.length).toEqual(5);
+  expect(logger.entries.length).toEqual(4);
   verifyLogEntry(logger.entries[0], 1, jugs.jugX, new Gallons(0), jugs.jugY, jugs.jugY.capacity, 'Fill Jug Y');
-  verifyLogEntry(logger.entries[1], 2, jugs.jugX, new Gallons(0), jugs.jugY, new Gallons(100), 'Empty Jug X');
-  verifyLogEntry(logger.entries[2], 3, jugs.jugX, new Gallons(2), jugs.jugY, new Gallons(98), 'Transfer from Jug Y to Jug X');
-  verifyLogEntry(logger.entries[3], 4, jugs.jugX, new Gallons(0), jugs.jugY, new Gallons(98), 'Empty Jug X');
-  verifyLogEntry(logger.entries[4], 5, jugs.jugX, new Gallons(2), jugs.jugY, new Gallons(96), 'Transfer from Jug Y to Jug X');
+  verifyLogEntry(logger.entries[1], 2, jugs.jugX, new Gallons(2), jugs.jugY, new Gallons(98), 'Transfer from Jug Y to Jug X');
+  verifyLogEntry(logger.entries[2], 3, jugs.jugX, new Gallons(0), jugs.jugY, new Gallons(98), 'Empty Jug X');
+  verifyLogEntry(logger.entries[3], 4, jugs.jugX, new Gallons(2), jugs.jugY, new Gallons(96), 'Transfer from Jug Y to Jug X');
 });
 
 test('Put Jug X into jugX Entry field when logging an Action triggered by Jug X', () => {
