@@ -80,11 +80,13 @@ class TransferFromSmallerToBiggerJug extends MixRecipe {
   }
 
   prepare(jugs: Jugs, targetVolume: Gallons): void {
+    const smallerJug = jugs.smallerJug;
+    const biggerJug = jugs.biggerJug;
     let accumulatedVolume = new Gallons(0);
     while (accumulatedVolume.isLowerThan(targetVolume)) {
-      this.mixer.fill(jugs.smallerJug);
-      accumulatedVolume = accumulatedVolume.plus(jugs.smallerJug.capacity);
-      this.mixer.transferBetween(jugs.smallerJug, jugs.biggerJug, accumulatedVolume);
+      this.mixer.fill(smallerJug);
+      accumulatedVolume = accumulatedVolume.plus(smallerJug.capacity);
+      this.mixer.transferBetween(smallerJug, biggerJug, accumulatedVolume);
     }
   }
 }
@@ -95,10 +97,12 @@ class TransferFromBiggerToSmallerJug extends MixRecipe {
   }
 
   prepare(jugs: Jugs, targetVolume: Gallons): void {
-    this.mixer.fill(jugs.biggerJug);
-    while (jugs.biggerJug.volumeFilled.isHigherThan(targetVolume)) {
-      this.mixer.empty(jugs.smallerJug);
-      this.mixer.transferBetween(jugs.biggerJug, jugs.smallerJug, jugs.smallerJug.capacity);
+    const smallerJug = jugs.smallerJug;
+    const biggerJug = jugs.biggerJug;
+    this.mixer.fill(biggerJug);
+    while (biggerJug.volumeFilled.isHigherThan(targetVolume)) {
+      this.mixer.empty(smallerJug);
+      this.mixer.transferBetween(biggerJug, smallerJug, smallerJug.capacity);
     }
   }
 }
