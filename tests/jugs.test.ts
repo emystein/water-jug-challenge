@@ -1,5 +1,6 @@
 import Jugs from '../src/model/jugs';
 import Gallons, { IllegalVolume } from '../src/model/volume';
+import Jug from '../src/model/jug';
 
 describe('Jugs Capacities', () => {
   test('Illegal Jug X capacity', () => {
@@ -13,26 +14,14 @@ describe('Jugs Capacities', () => {
 describe('Identify Jugs', () => {
   const jugs = Jugs.withCapacities(new Gallons(1), Gallons.positive(1));
 
-  test('When jug1 is jugX and jug2 is undefined', () => {
-    const { jugX, jugY } = jugs.identifyJugs(jugs.jugX, undefined);
-    expect(jugX).toBe(jugs.jugX);
-    expect(jugY).toBe(jugs.jugY);
-  });
-
-  test('When jug1 is jugX and jug2 is jugY', () => {
-    const { jugX, jugY } = jugs.identifyJugs(jugs.jugX, jugs.jugY);
-    expect(jugX).toBe(jugs.jugX);
-    expect(jugY).toBe(jugs.jugY);
-  });
-
-  test('When jug1 is jugY and jug2 is undefined', () => {
-    const { jugX, jugY } = jugs.identifyJugs(jugs.jugY, undefined);
-    expect(jugX).toBe(jugs.jugX);
-    expect(jugY).toBe(jugs.jugY);
-  });
-
-  test('When jug1 is jugY and jug2 is jugX', () => {
-    const { jugX, jugY } = jugs.identifyJugs(jugs.jugX, jugs.jugY);
+  it.each([
+    [jugs.jugX, undefined],
+    [jugs.jugX, jugs.jugY],
+    [jugs.jugY, undefined],
+    [jugs.jugY, jugs.jugX],
+  ])
+  ('Jug 1: %p, Jug 2: %p', (jug1: Jug, jug2: Jug | undefined) => {
+    const { jugX, jugY } = jugs.identifyJugs(jug1, jug2);
     expect(jugX).toBe(jugs.jugX);
     expect(jugY).toBe(jugs.jugY);
   });

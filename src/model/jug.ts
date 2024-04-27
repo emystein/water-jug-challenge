@@ -54,7 +54,7 @@ export default class Jug {
     return this.capacity.isEqualTo(targetVolume);
   }
 
-  capacityUpTo(otherVolume: Gallons): Gallons {
+  capacityDifferenceWith(otherVolume: Gallons): Gallons {
     return this.capacity.differenceWith(otherVolume);
   }
 

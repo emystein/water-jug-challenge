@@ -32,11 +32,11 @@ export default class Jugs {
   }
 
   smallerJugCapacityUpToTargetVolume(targetVolume: Gallons): Gallons {
-    return this.smallerJug.capacityUpTo(targetVolume);
+    return this.smallerJug.capacityDifferenceWith(targetVolume);
   }
 
   biggerJugCapacityUpToTargetVolume(targetVolume: Gallons): Gallons {
-    return this.biggerJug.capacityUpTo(targetVolume);
+    return this.biggerJug.capacityDifferenceWith(targetVolume);
   }
 
   haveAJugWithTheSameCapacityThan(targetVolume: Gallons): boolean {
