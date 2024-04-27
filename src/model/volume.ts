@@ -13,15 +13,15 @@ export default class Gallons {
     return this.amount == amountExpected.amount;
   }
 
-  isLessThan(other: Gallons): boolean {
+  isLowerThan(other: Gallons): boolean {
     return this.amount < other.amount;
   }
 
-  isLessOrEqualThan(other: Gallons): boolean {
+  isLowerOrEqualThan(other: Gallons): boolean {
     return this.amount <= other.amount;
   }
 
-  isGreaterThan(other: Gallons): boolean {
+  isHigherThan(other: Gallons): boolean {
     return this.amount > other.amount;
   }
 

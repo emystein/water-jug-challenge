@@ -35,7 +35,7 @@ export default class Jug {
   }
 
   filledContentFitsCompletelyIn(other: Jug): boolean {
-    return this.volumeFilled.isLessOrEqualThan(other.remainingToFill());
+    return this.volumeFilled.isLowerOrEqualThan(other.remainingToFill());
   }
 
   remainingToFill(): Gallons {
@@ -43,11 +43,11 @@ export default class Jug {
   }
 
   hasLessOrEqualCapacityThan(other: Jug): boolean {
-    return this.capacity.isLessOrEqualThan(other.capacity);
+    return this.capacity.isLowerOrEqualThan(other.capacity);
   }
 
   hasGreaterCapacityThan(other: Jug): boolean {
-    return this.capacity.isGreaterThan(other.capacity);
+    return this.capacity.isHigherThan(other.capacity);
   }
 
   hasCapacity(targetVolume: Gallons): boolean {

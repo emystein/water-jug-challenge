@@ -24,7 +24,7 @@ export default class Jugs {
 
   jugWithNearestCapacityTo(targetVolume: Gallons): Jug {
     if (this.smallerJugCapacityUpToTargetVolume(targetVolume)
-      .isLessThan(this.biggerJugCapacityUpToTargetVolume(targetVolume))) {
+      .isLowerThan(this.biggerJugCapacityUpToTargetVolume(targetVolume))) {
       return this.smallerJug;
     } else {
       return this.biggerJug;

@@ -20,14 +20,14 @@ export default class Mixer {
 
     if (jugs.jugWithNearestCapacityTo(this.targetVolume) == smallerJug) {
       let accumulatedVolume = new Gallons(0);
-      while (accumulatedVolume.isLessThan(this.targetVolume)) {
+      while (accumulatedVolume.isLowerThan(this.targetVolume)) {
         this.fill(smallerJug);
         accumulatedVolume = accumulatedVolume.plus(smallerJug.capacity);
         this.transferBetween(smallerJug, biggerJug, accumulatedVolume);
       }
     } else {
       this.fill(biggerJug);
-      while (biggerJug.volumeFilled.isGreaterThan(this.targetVolume)) {
+      while (biggerJug.volumeFilled.isHigherThan(this.targetVolume)) {
         this.empty(smallerJug);
         this.transferBetween(biggerJug, smallerJug, smallerJug.capacity);
       }
