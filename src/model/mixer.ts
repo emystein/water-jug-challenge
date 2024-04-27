@@ -16,7 +16,7 @@ export default class Mixer {
   }
 
   mix(jugs: Jugs, targetVolume: PositiveGallons): MixResult {
-    const recipe = this.recipes.find(aRecipe => aRecipe.appliesTo(jugs, targetVolume));
+    const recipe = this.recipes.find(recipe => recipe.appliesTo(jugs, targetVolume));
     return recipe.mix(jugs, targetVolume);
   }
 
