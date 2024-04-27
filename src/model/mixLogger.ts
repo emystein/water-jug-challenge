@@ -6,12 +6,7 @@ export class MixLogEntry {
   public jugX: Jug;
   public jugY: Jug;
 
-  constructor(
-    public step: number,
-    jugX: Jug,
-    jugY: Jug,
-    public action: string,
-  ) {
+  constructor(public step: number, jugX: Jug, jugY: Jug, public action: string) {
     this.jugX = jugX.clone();
     this.jugY = jugY.clone();
   }
